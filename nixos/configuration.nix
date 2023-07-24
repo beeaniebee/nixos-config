@@ -67,7 +67,7 @@
   home-manager = {
     extraSpecialArgs = {inherit inputs; };
     users = {
-      beanie = import ../home-manager.nix;
+      beanie = import ./nixos/home.nix;
     };
   };
 
