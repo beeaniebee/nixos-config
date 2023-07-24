@@ -1,6 +1,3 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-
 { inputs, lib, config, pkgs, ... }: {
   # You can import other NixOS modules here
   imports = [
@@ -13,6 +10,7 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   nixpkgs = {
@@ -63,6 +61,13 @@
       initialPassword = "nixos";
       isNormalUser = true;
       extraGroups = [ "wheel" ];
+    };
+  };
+
+  home-manager = {
+    extraSpecialArgs = {inherit inputs; };
+    users = {
+      beanie = import ./home-manager.nix;
     };
   };
 
