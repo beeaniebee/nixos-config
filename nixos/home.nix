@@ -56,7 +56,11 @@
     discord
     google-chrome
     thunderbird
-
+    vlc
+    obsidian
+    onlyoffice-bin
+    pdfarranger
+    solaar
   ];
 
   # Enable home-manager and git
