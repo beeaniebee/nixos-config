@@ -40,7 +40,24 @@
 
   # Add stuff for your user as you see fit:
   programs.neovim.enable = true;
-  home.packages = with pkgs; [ firefox kate ];
+  home.packages = with pkgs; [
+    firefox
+    kate
+    cura
+    vscode
+    qalculate-qt
+    octave
+    logisim-evolution
+    minecraft
+    steam
+    blender
+    epson-escpr2
+    printrun
+    discord
+    google-chrome
+    thunderbird
+
+  ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
