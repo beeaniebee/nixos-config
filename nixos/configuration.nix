@@ -12,8 +12,6 @@
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
-
-    nixpkgs/nixos/modules/profiles/qemu-guest.nix
   ];
 
   nixpkgs = {
@@ -52,6 +50,8 @@
       auto-optimise-store = true;
     };
   };
+
+  services.qemuGuest.enable = true;
 
   networking.hostName = "nixos";
   time.timeZone = "America/New_York";
