@@ -12,6 +12,8 @@
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
+
+    nixpkgs/nixos/modules/profiles/qemu-guest.nix
   ];
 
   nixpkgs = {
