@@ -1,69 +1,39 @@
 { inputs, lib, config, pkgs, ... }: {
-  # You can import other NixOS modules here
   imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
-
     inputs.home-manager.nixosModules.home-manager
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
 
   nix = {
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     settings = {
-      # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
-      # Deduplicate and optimize nix store
       auto-optimise-store = true;
     };
   };
-
-  services.qemuGuest.enable = true;
 
   networking.hostName = "nixos";
   time.timeZone = "America/New_York";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   users.users = {
     beanie = {
       initialPassword = "nixos";
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "networkmanager" ];
     };
   };
 
@@ -81,17 +51,65 @@
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.libinput.enable = true;
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  sound.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    #jack.enable = true;
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    settings.General.Enable = "Source,Sink,Media,Socket";
+  };
 
   environment.systemPackages = with pkgs; [
     vim
     wget
     git
     curl
-    spice-vdagent
+    pavucontrol
+    plasma-pa
+    libimobiledevice
+    ifuse
   ];
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  services.usbmuxd = {
+  enable = true;
+  package = pkgs.usbmuxd2;
+  };
+
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      rocm-opencl-icd
+      rocm-opencl-runtime
+      amdvlk
+    ];
+  };
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:4:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
+  };
+
   system.stateVersion = "23.05";
 }
