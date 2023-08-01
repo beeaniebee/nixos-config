@@ -4,6 +4,12 @@
 
   nixpkgs = {
     overlays = [
+      (final: prev: {
+        dwm = prev.dwm.overrideAttrs (old: { src = /home/beanie/.suckless/dwm ;});
+        st = prev.st.overrideAttrs (old: { src = /home/beanie/.suckless/st ; });
+        dmenu = prev.dmenu.overrideAttrs (old: { src = /home/beanie/.suckless/dmenu ;});
+        dwmblocks = prev.dwmblocks.overrideAttrs (old: { src = /home/beanie/.suckless/dwmblocks ;});
+      })
     ];
     config = {
       allowUnfree = true;
