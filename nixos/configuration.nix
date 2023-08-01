@@ -23,6 +23,7 @@
   };
 
   networking.hostName = "nixos";
+  networking.networkManager.enable = true;
   time.timeZone = "America/New_York";
 
   boot.loader.systemd-boot.enable = true;
