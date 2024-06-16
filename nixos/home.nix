@@ -16,8 +16,6 @@
     homeDirectory = "/home/beanie";
   };
 
-  programs.neovim.enable = true;
-
   home.packages = with pkgs; [
     firefox
     kate
@@ -41,8 +39,17 @@
     polychromatic
   ];
 
+  wayland.windowManager.hyprland = {
+    enable = true;
+    #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
+    settings = {
+      "$mod" = "ALT";
+    };
+  };
+
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.neovim.enable = true;
 
   systemd.user.startServices = "sd-switch";
 

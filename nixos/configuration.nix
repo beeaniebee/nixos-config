@@ -19,6 +19,8 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
   };
 
@@ -48,7 +50,6 @@
   services.printing.enable = true;
 
   services.xserver.enable = true;
-  #services.xserver.libinput.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
