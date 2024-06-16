@@ -4,12 +4,6 @@
 
   nixpkgs = {
     overlays = [
-      (final: prev: {
-        dwm = prev.dwm.overrideAttrs (old: { src = /home/beanie/.suckless/dwm ;});
-        st = prev.st.overrideAttrs (old: { src = /home/beanie/.suckless/st ; });
-        dmenu = prev.dmenu.overrideAttrs (old: { src = /home/beanie/.suckless/dmenu ;});
-        dwmblocks = prev.dwmblocks.overrideAttrs (old: { src = /home/beanie/.suckless/dwmblocks ;});
-      })
     ];
     config = {
       allowUnfree = true;
@@ -23,6 +17,7 @@
   };
 
   programs.neovim.enable = true;
+
   home.packages = with pkgs; [
     firefox
     kate
@@ -40,10 +35,10 @@
     google-chrome
     thunderbird
     vlc
-    obsidian
     onlyoffice-bin
     pdfarranger
     solaar
+    polychromatic
   ];
 
   programs.home-manager.enable = true;
@@ -51,5 +46,5 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.stateVersion = "23.05";
+  home.stateVersion = "24.05";
 }
