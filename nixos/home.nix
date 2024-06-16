@@ -44,7 +44,6 @@
     waybar
     wofi
     networkmanagerapplet
-    swww
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
     meson
@@ -53,41 +52,45 @@
     wl-clipboard
     wlroots
     pavucontrol
+    dunst
+    polkit-kde-agent
+    nvidia-vaapi-driver
+    ffmpeg
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
-    xwayland.enable = true;
     #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
+    extraConfig = ''
+      bind = $mod, F, exec, firefox
+      bind = $mod enter, exec, kitty
 
-    settings = {
-      "$mod" = "ALT";
-      bind =
-      [
-        "$mod, F, exec, firefox"
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-        builtins.concatLists (builtins.genList (
-            x: let
-              ws = let
-                c = (x + 1) / 10;
-              in
-                builtins.toString (x + 1 - (c * 10));
-            in [
-              "$mod, ${ws}, workspace, ${toString (x + 1)}"
-              "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-            ]
-          )
-          10)
-      );
-    };
+      env = LIBVA_DRIVER_NAME,nvidia
+      env = XDG_SESSION_TYPE,wayland
+      env = GBM_BACKEND,nvidia-drm
+      env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+      env = NVD_BACKEND,direct
+
+      cursor {
+          no_hardware_cursors = true
+      }
+
+      exec-once = dunst
+      exec-once = waybar
+
+    '';
   };
 
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
-  programs.neovim.enable = true;
+  programs = {
+    home-manager.enable = true;
+    git.enable = true;
+    neovim.enable = true;
+    hyprlock.enable = true;
+  };
+  security.pam.services.hyprlock = {};
+
+  services.hypridle.enable = true;
+  services.hyprpaper.enable = true;
 
   systemd.user.startServices = "sd-switch";
 
