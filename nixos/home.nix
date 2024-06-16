@@ -21,15 +21,15 @@
   home.packages = with pkgs; [
     firefox
     kate
-    cura
-    vscode
+    #cura
+    #vscode
     qalculate-qt
-    octave
-    logisim-evolution
+    #octave
+    #logisim-evolution
     #minecraft - marked as broken, refusing to evaluate
     steam
-    blender
-    epson-escpr2
+    #blender
+    #epson-escpr2
     printrun
     discord
     google-chrome
