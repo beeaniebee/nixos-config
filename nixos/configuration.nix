@@ -53,9 +53,9 @@
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  environment.plasma6.excludePackages with pkgs.kdePackages; [
-    # any packages to exclude from KDE Plasma 6
-  ];
+  #environment.plasma6.excludePackages with pkgs.kdePackages; [
+  #  # any packages to exclude from KDE Plasma 6
+  #];
 
   sound.enable = true;
   security.rtkit.enable = true;

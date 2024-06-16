@@ -26,7 +26,7 @@
     qalculate-qt
     octave
     logisim-evolution
-    minecraft
+    #minecraft - marked as broken, refusing to evaluate
     steam
     blender
     epson-escpr2
