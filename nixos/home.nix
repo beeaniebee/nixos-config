@@ -31,8 +31,8 @@
     #blender
     #epson-escpr2
     printrun
-    discord
-    google-chrome
+    #discord
+    #google-chrome
     thunderbird
     vlc
     onlyoffice-bin
