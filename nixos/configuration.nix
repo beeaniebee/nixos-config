@@ -113,7 +113,7 @@
   services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
-    open = false;
+    open = true;
     nvidiaSettings = true;
     prime = {
       offload = {
