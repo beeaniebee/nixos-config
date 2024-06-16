@@ -37,11 +37,27 @@
     pdfarranger
     solaar
     polychromatic
+    kitty
+    waybar
+    wofi
+    networkmanagerapplet
+    swww
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
+    meson
+    wayland-protocols
+    wayland-utils
+    wl-clipboard
+    wlroots
+    pavucontrol
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
+    nvidiaPatches = true;
     #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
+
     settings = {
       "$mod" = "ALT";
       bind =
@@ -66,6 +82,7 @@
       );
     };
   };
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs.home-manager.enable = true;
   programs.git.enable = true;
