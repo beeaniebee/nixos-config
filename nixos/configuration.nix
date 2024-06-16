@@ -68,6 +68,7 @@
   };
 
   hardware.pulseaudio.enable = false;
+  hardware.openrazer.enable = true;
 
   hardware.bluetooth = {
     enable = true;
