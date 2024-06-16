@@ -58,7 +58,6 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    nvidiaPatches = true;
     #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
 
     settings = {
