@@ -79,7 +79,7 @@
       env = NVD_BACKEND,direct
 
       gestures {
-        workspace_swipe = false
+        workspace_swipe = true
       }
 
       exec-once = dunst & waybar & hyprpaper & nm-applet
