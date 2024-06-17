@@ -62,8 +62,15 @@
     enable = true;
     #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
     extraConfig = ''
-      bind = $mod, F, exec, firefox
-      bind = $mod enter, exec, kitty
+      $mainMod = ALT
+
+      $terminal = kitty
+      $fileManager = dolphin
+      $menu = wofi --show drun
+
+      bind = $mainMod, F, exec, firefox
+      bind = $mainMod, enter, exec, $terminal
+      bind = $mainMod, P, exec, $menu
 
       env = LIBVA_DRIVER_NAME,nvidia
       env = XDG_SESSION_TYPE,wayland
@@ -75,8 +82,11 @@
           no_hardware_cursors = true
       }
 
-      exec-once = dunst
-      exec-once = waybar
+      gestures {
+        workspace_swipe = false
+      }
+
+      exec-once = dunst & waybar & hyprpaper & nm-applet
 
     '';
   };
