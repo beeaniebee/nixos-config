@@ -71,7 +71,7 @@
       bind = $mainMod, F, exec, firefox
       bind = $mainMod, RETURN, exec, $terminal
       bind = $mainMod, P, exec, $menu
-      bind = $mainMod SHIFT, C, killallactive
+      bind = $mainMod SHIFT, C, killactive
 
       # Move focus with mainMod + arrow keys
       bind = $mainMod, left, movefocus, l
