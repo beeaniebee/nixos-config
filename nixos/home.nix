@@ -69,7 +69,7 @@
       $menu = wofi --show drun
 
       bind = $mainMod, F, exec, firefox
-      bind = $mainMod, enter, exec, $terminal
+      bind = $mainMod, RETURN, exec, $terminal
       bind = $mainMod, P, exec, $menu
 
       env = LIBVA_DRIVER_NAME,nvidia
@@ -77,10 +77,6 @@
       env = GBM_BACKEND,nvidia-drm
       env = __GLX_VENDOR_LIBRARY_NAME,nvidia
       env = NVD_BACKEND,direct
-
-      cursor {
-          no_hardware_cursors = true
-      }
 
       gestures {
         workspace_swipe = false
