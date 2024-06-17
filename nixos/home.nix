@@ -71,6 +71,9 @@
       bind = $mainMod, F, exec, firefox
       bind = $mainMod, RETURN, exec, $terminal
       bind = $mainMod, P, exec, $menu
+      bind = $mainMod, SHIFT, C, killallactive
+
+
 
       env = LIBVA_DRIVER_NAME,nvidia
       env = XDG_SESSION_TYPE,wayland
