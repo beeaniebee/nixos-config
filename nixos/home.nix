@@ -19,6 +19,13 @@
     };
   };
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+  };
+
   home.packages = with pkgs; [
     firefox
     kate
@@ -33,7 +40,7 @@
     #epson-escpr2
     printrun
     #discord
-    #google-chrome
+    google-chrome
     thunderbird
     vlc
     onlyoffice-bin
@@ -62,6 +69,8 @@
     enable = true;
     #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
     extraConfig = ''
+      monitor=eDP-1, 1920x1080@144, 0x0, 1
+
       $mainMod = ALT
 
       $terminal = kitty
@@ -104,9 +113,13 @@
       bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
       # Example special workspace (scratchpad)
-      bind = $mainMod, S, togglespecialworkspace, magic
-      bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+      bind = $mainMod, `, togglespecialworkspace, magic
+      bind = $mainMod SHIFT, `, movetoworkspace, special:magic
 
+      bind = $mainMod SHIFT, right, resizeactive, 10 0
+      bind = $mainMod SHIFT, left, resizeactive, -10 0
+      bind = $mainMod SHIFT, up, resizeactive, 0 -10
+      bind = $mainMod SHIFT, down, resizeactive, 0 10
 
       env = LIBVA_DRIVER_NAME,nvidia
       env = XDG_SESSION_TYPE,wayland
