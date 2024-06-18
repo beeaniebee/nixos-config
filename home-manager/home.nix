@@ -68,14 +68,14 @@
     #cura
     #vscode
     qalculate-qt
-    #octave
+    octave
     #logisim-evolution
     #minecraft - marked as broken, refusing to evaluate
     steam
     #blender
     #epson-escpr2
     printrun
-    #discord
+    discord
     google-chrome
     thunderbird
     vlc
@@ -103,15 +103,34 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    #systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
+    systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
     extraConfig = ''
-      monitor=eDP-1, 1920x1080@144, 0x0, 1
+      monitor=eDP-1, 1920x1080@144, 0x0, 1.3
 
       $mainMod = ALT
 
       $terminal = kitty
       $fileManager = dolphin
       $menu = wofi --show drun
+
+      border_size = 2
+      gaps_in = 3
+      gaps_out = 5
+
+      layout = master
+
+      resize_on_border = true
+
+      rounding = 5
+
+      first_launch_animation = true
+
+      key_press_enables_dpms = true
+
+      animate_manual_resizes = true
+      animate_mouse_windowdragging = false
+
+      vrr = 1
 
       bind = $mainMod, F, exec, firefox
       bind = $mainMod, RETURN, exec, $terminal
@@ -164,7 +183,7 @@
       env = NVD_BACKEND,direct
 
       master {
-          no-gaps-when-only = 2
+          no_gaps_when_only = 1
       }
 
       gestures {
@@ -173,7 +192,10 @@
 
       input {
         touchpad {
+          disable_while_typing = true
           natural_scroll = true
+          clickfinger_behavior = true
+          tap-and-drag = true;
         }
       }
 
