@@ -63,7 +63,6 @@
   };
 
   home.packages = with pkgs; [
-    home-manager
     firefox
     kate
     #cura
