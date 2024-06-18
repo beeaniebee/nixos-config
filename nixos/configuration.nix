@@ -37,13 +37,7 @@
       initialPassword = "nixos";
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "openrazer" ];
-    };
-  };
-
-  home-manager = {
-    extraSpecialArgs = {inherit inputs; };
-    users = {
-      beanie = import ./home.nix;
+      shell = pkgs.zsh;
     };
   };
 
@@ -53,7 +47,9 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+
   programs.hyprland.enable = true;
+  programs.zsh.enable = true;
 
   #environment.plasma6.excludePackages with pkgs.kdePackages; [
   #  # any packages to exclude from KDE Plasma 6
