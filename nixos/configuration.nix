@@ -58,6 +58,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.initrd.systemd.enable = true;
 
   users.users = {
     beanie = {
@@ -70,10 +71,12 @@
 
   services.printing.enable = true;
 
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = false;
+  services = {
+    xserver.enable = true;
+    displayManager.sddm.enable = true;
+    displayManager.sddm.wayland.enable = true;
+    desktopManager.plasma6.enable = false;
+  };
 
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
@@ -96,23 +99,36 @@
     };
   };
 
-  hardware.pulseaudio.enable = false;
-  hardware.openrazer.enable = true;
+  hardware = {
+    pulseaudio.enable = false;
+    openrazer.enable = true;
 
-  hardware.bluetooth = {
-    enable = true;
-    package = pkgs.bluez;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        ControllerMode = "dual";
-        FastConnectable = "true";
-        Experimental = "true";
+    bluetooth = {
+      enable = true;
+      package = pkgs.bluez;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          ControllerMode = "dual";
+          FastConnectable = "true";
+          Experimental = "true";
+        };
+        Policy = {
+          AutoEnable = "true";
+        };
       };
-      Policy = {
-        AutoEnable = "true";
-      };
+    };
+
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        rocm-opencl-icd
+        rocm-opencl-runtime
+        amdvlk
+      ];
     };
   };
 
@@ -142,16 +158,6 @@
   package = pkgs.usbmuxd2;
   };
 
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      rocm-opencl-icd
-      rocm-opencl-runtime
-      amdvlk
-    ];
-  };
   services.xserver.videoDrivers = [ "amdgpu" ]; #"nvidia" ];
   #hardware.nvidia = {
   #  modesetting.enable = true;
