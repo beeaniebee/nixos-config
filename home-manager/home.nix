@@ -58,7 +58,7 @@
 
     font = {
       name = "Fantasque Sans Mono Nerd Font";
-      size = 14;
+      size = 10;
     };
   };
 
@@ -112,11 +112,8 @@
     enable = true;
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
 
-    plugins = [
-      #inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-    ];
-
     settings = {
+      monitor = "eDP-1, 1920x1080@144, 0x0, 1.333333";
       "$mod" = "ALT";
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
@@ -211,8 +208,6 @@
     };
 
     extraConfig = ''
-      monitor=eDP-1, 1920x1080@144, 0x0, 1.333333
-
       #env = LIBVA_DRIVER_NAME,nvidia
       #env = XDG_SESSION_TYPE,wayland
       #env = GBM_BACKEND,nvidia-drm
