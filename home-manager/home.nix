@@ -113,7 +113,7 @@
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
 
     plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      #inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
     ];
 
     settings = {
@@ -161,33 +161,57 @@
             )
             10)
       );
+
+      bindm = [
+        # mouse movements
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
+      ];
+
+      general = {
+        border_size = "2";
+        gaps_in = "3";
+        gaps_out = "5";
+        layout = "dwindle";
+        resize_on_border = "true";
+      };
+
+      decoration = {
+        rounding = "5";
+      };
+
+      misc = {
+        key_press_enables_dpms = "true";
+        animate_manual_resizes = "true";
+        animate_mouse_windowdragging = "true";
+        vrr = "1";
+      };
+
+      xwayland = {
+        force_zero_scaling = "true";
+      };
+
+      dwindle = {
+        smart_split = "true";
+        no_gaps_when_only = "1";
+      };
+
+      gestures = {
+        workspace_swipe = "true";
+      };
+
+      input = {
+        touchpad = {
+          disable_while_typing = "true";
+          natural_scroll = "true";
+          clickfinger_behavior = "true";
+          tap-and-drag = "true";
+        };
+      };
     };
 
     extraConfig = ''
       monitor=eDP-1, 1920x1080@144, 0x0, 1.333333
-
-      general {
-        border_size = 2
-        gaps_in = 3
-        gaps_out = 5
-        layout = master
-        resize_on_border = true
-      }
-
-      decoration {
-        rounding = 5
-      }
-
-      misc {
-        key_press_enables_dpms = true
-        animate_manual_resizes = true
-        animate_mouse_windowdragging = false
-        vrr = 1
-      }
-
-      xwayland {
-        force_zero_scaling = true
-      }
 
       #env = LIBVA_DRIVER_NAME,nvidia
       #env = XDG_SESSION_TYPE,wayland
@@ -195,26 +219,8 @@
       #env = __GLX_VENDOR_LIBRARY_NAME,nvidia
       #env = NVD_BACKEND,direct
 
-      dwindle {
-        smart_split = true
-        no_gaps_when_only = 1
-      }
-
-      gestures {
-        workspace_swipe = true
-      }
-
-      input {
-        touchpad {
-          disable_while_typing = true
-          natural_scroll = true
-          clickfinger_behavior = true
-          tap-and-drag = true;
-        }
-      }
-
+      exec-once = dbus-update-activation-environment --systemd --all
       exec-once = dunst & waybar & hyprpaper & nm-applet
-
     '';
   };
 
