@@ -143,6 +143,7 @@
     plasma-pa
     libimobiledevice
     ifuse
+    power-profiles-daemon
     openrazer-daemon
     pciutils
     aha
@@ -152,7 +153,6 @@
     wayland-utils
     tpm2-tss
     blueman
-    #pyprland.packages."x86_64-linux".pyprland
   ];
 
   services.usbmuxd = {
