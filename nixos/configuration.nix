@@ -75,7 +75,7 @@
     xserver.enable = true;
     displayManager.sddm.enable = true;
     displayManager.sddm.wayland.enable = true;
-    desktopManager.plasma6.enable = false;
+    #desktopManager.plasma6.enable = false;
   };
 
   programs.hyprland.enable = true;
@@ -149,6 +149,7 @@
     vulkan-tools
     wayland-utils
     tpm2-tss
+    blueman
     #pyprland.packages."x86_64-linux".pyprland
   ];
 

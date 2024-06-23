@@ -40,25 +40,25 @@
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };
+    pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 16;
+    };
   };
 
-  programs.zsh = {
+  gtk = {
     enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    autocd = true;
 
-    history = {
-    size = 10000;
-    share = true;
-    path = "${config.xdg.dataHome}/zsh/history";
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
     };
 
-    oh-my-zsh = {
-      enable = true;
-      plugins = [];
-      theme = "gentoo";
+    font = {
+      name = "Fantasque Sans Mono Nerd Font";
+      size = 14;
     };
   };
 
@@ -99,92 +99,95 @@
     polkit-kde-agent
     nvidia-vaapi-driver
     ffmpeg
+    dolphin
     nerdfonts
     fantasque-sans-mono
     nixfmt-rfc-style
     blueman
+    pass-wayland
+    gnupg
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
+
+    #plugins = [
+    #  inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+    #];
+
+    settings = {
+      "$mod" = "ALT";
+      "$terminal" = "kitty";
+      "$fileManager" = "dolphin";
+      "$menu" = "yofi";
+      bind = [
+        "$mod, Q, exec, pgrep qalculate-gtk && hyprctl dispatch togglespecialworkspace calculator || qalculate-gtk &"
+        #"$mod, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable"
+        "$mod, F, exec, firefox"
+        "$mod, RETURN, exec, $terminal"
+        "$mod, E, exec, $fileManager"
+        "$mod, P, exec, $menu"
+        "$mod SHIFT, C, killactive"
+
+        # Move focus with mainMod + arrow keys
+        "$mod, left, movefocus, l"
+        "$mod, right, movefocus, r"
+        "$mod, up, movefocus, u"
+        "$mod, down, movefocus, d"
+
+        "$mod SHIFT, right, resizeactive, 50 0"
+        "$mod SHIFT, left, resizeactive, -50 0"
+        "$mod SHIFT, up, resizeactive, 0 -50"
+        "$mod SHIFT, down, resizeactive, 0 50"
+
+        # Example special workspace (scratchpad)
+        "$mod, grave, togglespecialworkspace, magic"
+        "$mod SHIFT, grave, movetoworkspace, special:magic"
+      ]
+      ++ (
+          # workspaces
+          #  $mod + [shift +] {1..10} to [move to] workspace {1..10}
+          builtins.concatLists (builtins.genList (
+              x: let
+                ws = let
+                  c = (x + 1) / 10;
+                in
+                  builtins.toString (x + 1 - (c * 10));
+              in [
+                "$mod, ${ws}, workspace, ${toString (x + 1)}"
+                "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+              ]
+            )
+            10)
+      );
+    };
+
     extraConfig = ''
       monitor=eDP-1, 1920x1080@144, 0x0, 1.333333
 
-      $mainMod = ALT
-
-      $terminal = kitty
-      $fileManager = dolphin
-      $menu = yofi
-
-
       general {
-	  border_size = 2
-	  gaps_in = 3
-	  gaps_out = 5
-	  layout = master
-	  resize_on_border = true
+        border_size = 2
+        gaps_in = 3
+        gaps_out = 5
+        layout = master
+        resize_on_border = true
       }
 
       decoration {
-          rounding = 5
+        rounding = 5
       }
 
       misc {
-          key_press_enables_dpms = true
-	  animate_manual_resizes = true
-	  animate_mouse_windowdragging = false
-	  vrr = 1
+        key_press_enables_dpms = true
+        animate_manual_resizes = true
+        animate_mouse_windowdragging = false
+        vrr = 1
       }
 
       xwayland {
-          force_zero_scaling = true
+        force_zero_scaling = true
       }
-
-      bind = $mainMod, F, exec, firefox
-      bind = $mainMod, RETURN, exec, $terminal
-      bind = $mainMod, E, exec, $fileManager
-      bind = $mainMod, P, exec, $menu
-      bind = $mainMod SHIFT, C, killactive
-
-      # Move focus with mainMod + arrow keys
-      bind = $mainMod, left, movefocus, l
-      bind = $mainMod, right, movefocus, r
-      bind = $mainMod, up, movefocus, u
-      bind = $mainMod, down, movefocus, d
-
-      # Switch workspaces with mainMod + [0-9]
-      bind = $mainMod, 1, workspace, 1
-      bind = $mainMod, 2, workspace, 2
-      bind = $mainMod, 3, workspace, 3
-      bind = $mainMod, 4, workspace, 4
-      bind = $mainMod, 5, workspace, 5
-      bind = $mainMod, 6, workspace, 6
-      bind = $mainMod, 7, workspace, 7
-      bind = $mainMod, 8, workspace, 8
-      bind = $mainMod, 9, workspace, 9
-      bind = $mainMod, 0, workspace, 10
-
-      # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      bind = $mainMod SHIFT, 1, movetoworkspace, 1
-      bind = $mainMod SHIFT, 2, movetoworkspace, 2
-      bind = $mainMod SHIFT, 3, movetoworkspace, 3
-      bind = $mainMod SHIFT, 4, movetoworkspace, 4
-      bind = $mainMod SHIFT, 5, movetoworkspace, 5
-      bind = $mainMod SHIFT, 6, movetoworkspace, 6
-      bind = $mainMod SHIFT, 7, movetoworkspace, 7
-      bind = $mainMod SHIFT, 8, movetoworkspace, 8
-      bind = $mainMod SHIFT, 9, movetoworkspace, 9
-      bind = $mainMod SHIFT, 0, movetoworkspace, 10
-
-      # Example special workspace (scratchpad)
-      bind = $mainMod, `, togglespecialworkspace, magic
-      bind = $mainMod SHIFT, `, movetoworkspace, special:magic
-
-      bind = $mainMod SHIFT, right, resizeactive, 50 0
-      bind = $mainMod SHIFT, left, resizeactive, -50 0
-      bind = $mainMod SHIFT, up, resizeactive, 0 -50
-      bind = $mainMod SHIFT, down, resizeactive, 0 50
 
       #env = LIBVA_DRIVER_NAME,nvidia
       #env = XDG_SESSION_TYPE,wayland
@@ -193,11 +196,8 @@
       #env = NVD_BACKEND,direct
 
       dwindle {
-
-          smart_split = true
-
-
-          no_gaps_when_only = 1
+        smart_split = true
+        no_gaps_when_only = 1
       }
 
       gestures {
@@ -216,16 +216,33 @@
       exec-once = dunst & waybar & hyprpaper & nm-applet
 
     '';
-    #plugins = [
-      #inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-      #inputs.hyprland-plugins.packages.${pkgs.system}.pypr
-    #];
   };
 
   programs = {
     home-manager.enable = true;
     git.enable = true;
     neovim.enable = true;
+    gpg.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      autocd = true;
+
+      history = {
+      size = 10000;
+      share = true;
+      path = "${config.xdg.dataHome}/zsh/history";
+      };
+
+      oh-my-zsh = {
+        enable = true;
+        plugins = [];
+        theme = "gentoo";
+      };
+    };
+
     hyprlock = {
       enable = true;
       settings = {
@@ -264,6 +281,14 @@
   };
 
   services = {
+    gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 34560000;
+      maxCacheTtl = 34560000;
+      pinentryPackage = pkgs.pinentry-qt;
+      enableScDaemon = false;
+    };
+
     hypridle = {
       enable = true;
       settings = {
@@ -293,12 +318,6 @@
         splash = false;
         splash_offset = 2.0;
 
-        preload =
-          [ "/share/wallpapers/buttons.png" "/share/wallpapers/cat_pacman.png" ];
-
-        wallpaper = [
-          "eDP-1,/share/wallpapers/cat_pacman.png"
-        ];
       };
     };
   };
