@@ -154,6 +154,8 @@
     blueman
   ];
 
+  services.blueman.enable = true;
+
   services.usbmuxd = {
   #TODO: re-enable later
   enable = false;#true;
