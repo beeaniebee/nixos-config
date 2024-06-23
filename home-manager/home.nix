@@ -85,7 +85,7 @@
     polychromatic
     kitty
     waybar
-    wofi
+    yofi
     networkmanagerapplet
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
@@ -99,38 +99,46 @@
     polkit-kde-agent
     nvidia-vaapi-driver
     ffmpeg
+    nerdfonts
+    fantasque-sans-mono
+    nixfmt-rfc-style
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.variables = ["--all"]; if programs don't work in systemd services, but do on the terminal
+    systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
     extraConfig = ''
-      monitor=eDP-1, 1920x1080@144, 0x0, 1.3
+      monitor=eDP-1, 1920x1080@144, 0x0, 1.333333
 
       $mainMod = ALT
 
       $terminal = kitty
       $fileManager = dolphin
-      $menu = wofi --show drun
+      $menu = yofi
 
-      border_size = 2
-      gaps_in = 3
-      gaps_out = 5
 
-      layout = master
+      general {
+	  border_size = 2
+	  gaps_in = 3
+	  gaps_out = 5
+	  layout = master
+	  resize_on_border = true
+      }
 
-      resize_on_border = true
+      decoration {
+          rounding = 5
+      }
 
-      rounding = 5
+      misc {
+          key_press_enables_dpms = true
+	  animate_manual_resizes = true
+	  animate_mouse_windowdragging = false
+	  vrr = 1
+      }
 
-      first_launch_animation = true
-
-      key_press_enables_dpms = true
-
-      animate_manual_resizes = true
-      animate_mouse_windowdragging = false
-
-      vrr = 1
+      xwayland {
+          force_zero_scaling = true
+      }
 
       bind = $mainMod, F, exec, firefox
       bind = $mainMod, RETURN, exec, $terminal
@@ -176,13 +184,17 @@
       bind = $mainMod SHIFT, up, resizeactive, 0 -50
       bind = $mainMod SHIFT, down, resizeactive, 0 50
 
-      env = LIBVA_DRIVER_NAME,nvidia
-      env = XDG_SESSION_TYPE,wayland
-      env = GBM_BACKEND,nvidia-drm
-      env = __GLX_VENDOR_LIBRARY_NAME,nvidia
-      env = NVD_BACKEND,direct
+      #env = LIBVA_DRIVER_NAME,nvidia
+      #env = XDG_SESSION_TYPE,wayland
+      #env = GBM_BACKEND,nvidia-drm
+      #env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+      #env = NVD_BACKEND,direct
 
-      master {
+      dwindle {
+
+          smart_split = true
+
+
           no_gaps_when_only = 1
       }
 
@@ -202,6 +214,10 @@
       exec-once = dunst & waybar & hyprpaper & nm-applet
 
     '';
+    #plugins = [
+      #inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+      #inputs.hyprland-plugins.packages.${pkgs.system}.pypr
+    #];
   };
 
   programs = {

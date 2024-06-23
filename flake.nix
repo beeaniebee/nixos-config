@@ -9,6 +9,8 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    pyprland.url = "github:hyprland-community/pyprland";
+
     # TODO: Add any other flake you might need
     # hardware.url = "github:nixos/nixos-hardware";
   };
@@ -17,6 +19,7 @@
     self,
     nixpkgs,
     home-manager,
+    pyprland,
     ...
   } @ inputs: let
     inherit (self) outputs;

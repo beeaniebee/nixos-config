@@ -4,14 +4,13 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports =[ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd = {
+    availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "input_leds" ];
+    systemd.enable = true;
+    kernelModules = [ "kvm-amd" ];
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/865a7615-ad7e-40f0-bd77-536c915e00dd";
@@ -25,6 +24,13 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
+
+  fileSystems."/home/~beanie" =
+    { device = "/dev/disk/by-uuid/97ae19e3-54ef-4194-8caa-23fd69fc0e0d";
+      fsType = "ext4";
+    };
+
+  boot.initrd.luks.devices."luks-d4231690-29a1-4e04-ac55-ceb6dfcb726c".device = "/dev/disk/by-uuid/d4231690-29a1-4e04-ac55-ceb6dfcb726c";
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/489e11f7-bae8-404b-9dfd-4d59dc0d5850"; }

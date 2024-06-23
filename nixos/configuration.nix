@@ -112,6 +112,8 @@
     glxinfo
     vulkan-tools
     wayland-utils
+    tpm2-tss
+    #pyprland.packages."x86_64-linux".pyprland
   ];
 
   services.usbmuxd = {
@@ -130,30 +132,30 @@
       amdvlk
     ];
   };
-  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = true;
-    nvidiaSettings = true;
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      amdgpuBusId = "PCI:4:0:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-    powerManagement = {
-      # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-      # Enable this if you have graphical corruption issues or application crashes after waking
-      # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-      # of just the bare essentials.
-      enable = true;
-      # Fine-grained power management. Turns off GPU when not in use.
-      # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-      finegrained = true;
-    };
-  };
+  services.xserver.videoDrivers = [ "amdgpu" ]; #"nvidia" ];
+  #hardware.nvidia = {
+  #  modesetting.enable = true;
+  #  open = true;
+  #  nvidiaSettings = true;
+  #  prime = {
+  #    offload = {
+  #      enable = true;
+  #      enableOffloadCmd = true;
+  #    };
+  #    amdgpuBusId = "PCI:4:0:0";
+  #    nvidiaBusId = "PCI:1:0:0";
+  #  };
+  #  powerManagement = {
+  #    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+  #    # Enable this if you have graphical corruption issues or application crashes after waking
+  #    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+  #    # of just the bare essentials.
+  #    enable = true;
+  #    # Fine-grained power management. Turns off GPU when not in use.
+  #    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+  #    finegrained = true;
+  #  };
+  #};
 
   security.pam.services.hyprlock = {};
 
