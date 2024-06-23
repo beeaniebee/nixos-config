@@ -102,6 +102,7 @@
     nerdfonts
     fantasque-sans-mono
     nixfmt-rfc-style
+    blueman
   ];
 
   wayland.windowManager.hyprland = {
@@ -142,6 +143,7 @@
 
       bind = $mainMod, F, exec, firefox
       bind = $mainMod, RETURN, exec, $terminal
+      bind = $mainMod, E, exec, $fileManager
       bind = $mainMod, P, exec, $menu
       bind = $mainMod SHIFT, C, killactive
 
