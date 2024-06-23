@@ -112,9 +112,9 @@
     enable = true;
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
 
-    #plugins = [
-    #  inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
-    #];
+    plugins = [
+      inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo
+    ];
 
     settings = {
       "$mod" = "ALT";
