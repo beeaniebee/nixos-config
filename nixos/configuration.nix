@@ -34,7 +34,6 @@
     ];
     # Configure your nixpkgs instance
     config = {
-
       allowUnfree = true;
     };
   };
@@ -57,10 +56,17 @@
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.initrd.systemd.enable = true;
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+  };
+
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    loader.efi.efiSysMountPoint = "/boot/efi";
+    initrd.systemd.enable = true;
+  };
 
   users.users = {
     beanie = {
@@ -71,38 +77,79 @@
     };
   };
 
-  services.printing.enable = true;
-
   services = {
-    xserver.enable = true;
-    displayManager.sddm.enable = true;
-    displayManager.sddm.wayland.enable = true;
-  };
+    printing.enable = true;
+    blueman.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      package = pkgs.kdePackages.sddm;
+      catppuccin.enable = true;
+      wayland.enable = true;
+    };
 
-  programs.hyprland.enable = true;
-  programs.zsh.enable = true;
+    xserver = {
+      enable = true;
+      videoDrivers = [ "amdgpu" ]; #"nvidia" ];
+    };
 
-  sound.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    #jack.enable = true;
-    wireplumber.extraConfig = {
-      "monitor.bluez.properties" = {
-      "bluez5.enable-sbc-xq" = true;
-      "bluez5.enable-msbc" = true;
-      "bluez5.enable-hw-volume" = true;
-      "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+    usbmuxd = {
+      #TODO: re-enable later
+      enable = false;#true;
+      package = pkgs.usbmuxd2;
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      #jack.enable = true;
+      wireplumber.extraConfig = {
+        "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+        };
       };
     };
   };
 
+  programs = {
+    hyprland.enable = true;
+    zsh.enable = true;
+  };
+
+  sound.enable = true;
+  security.rtkit.enable = true;
+
   hardware = {
     pulseaudio.enable = false;
     openrazer.enable = true;
+
+    #nvidia = {
+    #  modesetting.enable = true;
+    #  open = true;
+    #  nvidiaSettings = true;
+    #  prime = {
+    #    offload = {
+    #      enable = true;
+    #      enableOffloadCmd = true;
+    #    };
+    #    amdgpuBusId = "PCI:4:0:0";
+    #    nvidiaBusId = "PCI:1:0:0";
+    #  };
+    #  powerManagement = {
+    #    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    #    # Enable this if you have graphical corruption issues or application crashes after waking
+    #    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+    #    # of just the bare essentials.
+    #    enable = true;
+    #    # Fine-grained power management. Turns off GPU when not in use.
+    #    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    #    finegrained = true;
+    #  };
+    #};
 
     bluetooth = {
       enable = true;
@@ -152,40 +199,10 @@
     wayland-utils
     tpm2-tss
     blueman
+    nwg-look
+    nwg-hello
+    nwg-panel
   ];
-
-  services.blueman.enable = true;
-
-  services.usbmuxd = {
-  #TODO: re-enable later
-  enable = false;#true;
-  package = pkgs.usbmuxd2;
-  };
-
-  services.xserver.videoDrivers = [ "amdgpu" ]; #"nvidia" ];
-  #hardware.nvidia = {
-  #  modesetting.enable = true;
-  #  open = true;
-  #  nvidiaSettings = true;
-  #  prime = {
-  #    offload = {
-  #      enable = true;
-  #      enableOffloadCmd = true;
-  #    };
-  #    amdgpuBusId = "PCI:4:0:0";
-  #    nvidiaBusId = "PCI:1:0:0";
-  #  };
-  #  powerManagement = {
-  #    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-  #    # Enable this if you have graphical corruption issues or application crashes after waking
-  #    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-  #    # of just the bare essentials.
-  #    enable = true;
-  #    # Fine-grained power management. Turns off GPU when not in use.
-  #    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-  #    finegrained = true;
-  #  };
-  #};
 
   security.pam.services.hyprlock = {};
 

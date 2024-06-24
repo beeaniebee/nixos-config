@@ -1,5 +1,3 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
   lib,
@@ -16,24 +14,6 @@
     # ./nvim.nix
   ];
 
-  nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
-
   home = {
     username = "beanie";
     homeDirectory = "/home/beanie";
@@ -43,23 +23,33 @@
     pointerCursor = {
       gtk.enable = true;
       package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-      size = 16;
+      name = "Catppuccin-Mocha-Mauve";
+      size = 20;
     };
+  };
+
+  catppuccin = {
+      enable = true;
+      flavor = "mocha";
   };
 
   gtk = {
     enable = true;
-
-    iconTheme = {
-      package = pkgs.gnome.adwaita-icon-theme;
-      name = "Adwaita";
+    catppuccin = {
+      enable = true;
+      size = "compact";
+      flavor = "mocha";
+      icon.enable = true;
     };
 
     font = {
       name = "Fantasque Sans Mono Nerd Font";
       size = 10;
     };
+  };
+
+  qt = {
+    style.catppuccin.enable = true;
   };
 
   home.packages = with pkgs; [
@@ -84,7 +74,15 @@
     solaar
     polychromatic
     kitty
-    waybar
+    #waybar
+    nwg-bar
+    nwg-look
+    nwg-panel
+    nwg-menu
+    nwg-hello
+    nwg-displays
+    zed
+    glib
     yofi
     networkmanagerapplet
     xdg-desktop-portal-gtk
@@ -112,7 +110,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
-
+    catppuccin.enable = true;
     settings = {
       monitor = "eDP-1, 1920x1080@144, 0x0, 1.333333";
       "$mod" = "ALT";
@@ -142,6 +140,8 @@
         # Example special workspace (scratchpad)
         "$mod, grave, togglespecialworkspace, magic"
         "$mod SHIFT, grave, movetoworkspace, special:magic"
+
+        "$mod SHIFT, Q, exit"
       ]
       ++ (
           # workspaces
@@ -214,6 +214,10 @@
       #env = GBM_BACKEND,nvidia-drm
       #env = __GLX_VENDOR_LIBRARY_NAME,nvidia
       #env = NVD_BACKEND,direct
+      env = HYPRCURSOR_THEME,MyCursor
+      env = HYPRCURSOR_SIZE,20
+      env = XCURSOR_THEME,MyCursor
+      env = XCURSOR_SIZE,20
 
       exec-once = dbus-update-activation-environment --systemd --all
       exec-once = dunst & waybar & hyprpaper & nm-applet
@@ -223,13 +227,23 @@
   programs = {
     home-manager.enable = true;
     git.enable = true;
-    neovim.enable = true;
     gpg.enable = true;
+    neovim = {
+      enable = true;
+      catppuccin.enable = true;
+    };
+    kitty = {
+      enable = true;
+      catppuccin.enable = true;
+    };
     zsh = {
       enable = true;
       enableCompletion = true;
       autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
+      syntaxHighlighting = {
+        enable = true;
+        catppuccin.enable = true;
+      };
       autocd = true;
 
       history = {
@@ -257,7 +271,7 @@
 
         background = [
           {
-            path = "~/.background.png";
+            path = "~/.wallpaper.png";
             blur_passes = 3;
             blur_size = 8;
           }
@@ -289,6 +303,11 @@
       maxCacheTtl = 34560000;
       pinentryPackage = pkgs.pinentry-qt;
       enableScDaemon = false;
+    };
+
+    dunst = {
+      enable = true;
+      catppuccin.enable = true;
     };
 
     hypridle = {
