@@ -118,6 +118,7 @@
     passff-host
     xfce.thunar
     walk
+    lunarvim
   ];
 
   wayland.windowManager.hyprland = {
@@ -244,6 +245,16 @@
     neovim = {
       enable = true;
       defaultEditor = true;
+      plugins = with pkgs.vimPlugins; [
+	nvim-lastplace
+	mason-nvim
+	mason-lspconfig-nvim
+	nvim-cmp
+	chadtree
+	FTerm-nvim
+	which-key-nvim
+	persisted-nvim
+      ];
     };
     kitty = {
       enable = true;
