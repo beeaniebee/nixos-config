@@ -19,6 +19,7 @@
     homeDirectory = "/home/beanie";
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
+      EDITOR = "nvim";
     };
     pointerCursor = {
       gtk.enable = true;
@@ -33,14 +34,25 @@
       flavor = "mocha";
   };
 
+  xdg = {
+    enable = true;
+    mime.enable = true;
+    mimeApps.enable = true;
+    portal = {
+      enable = true;
+      configPackages = [ pkgs.xdg-desktop-portal-hyprland ];
+      extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    };
+  };
+
   gtk = {
     enable = true;
-    catppuccin = {
-      enable = true;
-      size = "compact";
-      flavor = "mocha";
-      icon.enable = true;
-    };
+    #catppuccin = {
+    #  enable = true;
+    #  size = "compact";
+    #  flavor = "mocha";
+    #  icon.enable = true;
+    #};
 
     font = {
       name = "Fantasque Sans Mono Nerd Font";
@@ -81,9 +93,9 @@
     nwg-menu
     nwg-hello
     nwg-displays
-    zed
     glib
     yofi
+    helix
     networkmanagerapplet
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
@@ -97,7 +109,6 @@
     polkit-kde-agent
     nvidia-vaapi-driver
     ffmpeg
-    dolphin
     nerdfonts
     fantasque-sans-mono
     nixfmt-rfc-style
@@ -105,17 +116,19 @@
     pass-wayland
     gnupg
     passff-host
+    xfce.thunar
+    walk
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
-    catppuccin.enable = true;
+    #catppuccin.enable = true;
     settings = {
       monitor = "eDP-1, 1920x1080@144, 0x0, 1.333333";
       "$mod" = "ALT";
       "$terminal" = "kitty";
-      "$fileManager" = "dolphin";
+      "$fileManager" = "thunar";
       "$menu" = "yofi";
       bind = [
         "$mod, Q, exec, pgrep qalculate-gtk && hyprctl dispatch togglespecialworkspace calculator || qalculate-gtk &"
@@ -191,7 +204,7 @@
 
       dwindle = {
         smart_split = "true";
-        no_gaps_when_only = "1";
+        force_split = "2";
       };
 
       gestures = {
@@ -200,7 +213,7 @@
 
       input = {
         touchpad = {
-          disable_while_typing = "true";
+          disable_while_typing = "false";
           natural_scroll = "true";
           clickfinger_behavior = "true";
           tap-and-drag = "true";
@@ -230,19 +243,32 @@
     gpg.enable = true;
     neovim = {
       enable = true;
-      catppuccin.enable = true;
+      defaultEditor = true;
     };
     kitty = {
       enable = true;
-      catppuccin.enable = true;
+      #catppuccin.enable = true;
     };
     zsh = {
       enable = true;
       enableCompletion = true;
+      enableVteIntegration = true;
       autosuggestion.enable = true;
+
+      initExtra = ''
+	function lk {
+	  cd "$(walk --icons "$@")"
+	}
+      '';
+
+      sessionVariables = {
+	EDITOR = "$(which nvim)";
+
+
+      };
       syntaxHighlighting = {
         enable = true;
-        catppuccin.enable = true;
+        #catppuccin.enable = true;
       };
       autocd = true;
 
@@ -251,6 +277,8 @@
       share = true;
       path = "${config.xdg.dataHome}/zsh/history";
       };
+
+      
 
       oh-my-zsh = {
         enable = true;
@@ -307,7 +335,7 @@
 
     dunst = {
       enable = true;
-      catppuccin.enable = true;
+      #catppuccin.enable = true;
     };
 
     hypridle = {

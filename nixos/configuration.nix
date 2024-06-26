@@ -80,6 +80,8 @@
   services = {
     printing.enable = true;
     blueman.enable = true;
+    gvfs.enable = true;
+    tumbler.enable = true;
     displayManager.sddm = {
       enable = true;
       package = pkgs.kdePackages.sddm;
@@ -118,6 +120,13 @@
   programs = {
     hyprland.enable = true;
     zsh.enable = true;
+    xfconf.enable = true;
+    thunar = {  
+      enable = true;
+      plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+      ];
+    };
   };
 
   sound.enable = true;
@@ -202,6 +211,8 @@
     nwg-look
     nwg-hello
     nwg-panel
+    ark
+    
   ];
 
   security.pam.services.hyprlock = {};
