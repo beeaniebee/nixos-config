@@ -72,7 +72,7 @@
     beanie = {
       initialPassword = "nixos";
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "openrazer" ];
+      extraGroups = [ "wheel" "networkmanager" "openrazer" "input" ];
       shell = pkgs.zsh;
     };
   };
@@ -82,6 +82,7 @@
     blueman.enable = true;
     gvfs.enable = true;
     tumbler.enable = true;
+    power-profiles-daemon.enable = true;
     displayManager.sddm = {
       enable = true;
       package = pkgs.kdePackages.sddm;

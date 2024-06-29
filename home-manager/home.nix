@@ -86,7 +86,7 @@
     solaar
     polychromatic
     kitty
-    #waybar
+    waybar
     nwg-bar
     nwg-look
     nwg-panel
@@ -204,7 +204,7 @@
       };
 
       dwindle = {
-        smart_split = "true";
+        #smart_split = "true";
         force_split = "2";
       };
 
@@ -254,6 +254,7 @@
 	FTerm-nvim
 	which-key-nvim
 	persisted-nvim
+	neoscroll-nvim
       ];
     };
     kitty = {
@@ -274,8 +275,6 @@
 
       sessionVariables = {
 	EDITOR = "$(which nvim)";
-
-
       };
       syntaxHighlighting = {
         enable = true;
