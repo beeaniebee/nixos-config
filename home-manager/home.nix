@@ -263,9 +263,6 @@
       ];
     };
 
-    gpaste.enable = true;
-    kdeconnect.enable = true;
-
     kitty = {
       enable = true;
       #catppuccin.enable = true;
