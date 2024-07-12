@@ -127,7 +127,7 @@
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
     #catppuccin.enable = true;
     settings = {
-      monitor = "eDP-1, 1920x1080@144, 0x0, 1.333333";
+      #monitor = "eDP-1, 1920x1080@144, 0x0, 1.333333";
       "$mod" = "ALT";
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
@@ -262,6 +262,10 @@
         neoscroll-nvim
       ];
     };
+
+    gpaste.enable = true;
+    kdeconnect.enable = true
+
     kitty = {
       enable = true;
       #catppuccin.enable = true;
@@ -288,12 +292,12 @@
       autocd = true;
 
       history = {
-      size = 10000;
-      share = true;
-      path = "${config.xdg.dataHome}/zsh/history";
+        size = 10000;
+        share = true;
+        path = "${config.xdg.dataHome}/zsh/history";
       };
 
-      
+
 
       oh-my-zsh = {
         enable = true;
@@ -380,8 +384,8 @@
       settings = {
         ipc = "on";
         splash = false;
-        preload = "~/.wallpaper.png";
-        wallpaper = "eDP-1,~/.wallpaper.png";
+        #preload = "~/.wallpaper.png";
+        #wallpaper = "eDP-1,~/.wallpaper.png";
       };
     };
   };
