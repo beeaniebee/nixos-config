@@ -83,14 +83,14 @@
     gvfs.enable = true;
     tumbler.enable = true;
     power-profiles-daemon.enable = true;
-    
+
     displayManager.sddm = {
       enable = true;
       package = pkgs.kdePackages.sddm;
       catppuccin.enable = true;
       wayland.enable = true;
     };
-    
+
     xserver = {
       enable = true;
       desktopManager.cinnamon.enable = true;
@@ -125,7 +125,9 @@
     hyprland.enable = true;
     zsh.enable = true;
     xfconf.enable = true;
-    thunar = {  
+    gpaste.enable = true;
+    kdeconnect.enable = true;
+    thunar = {
       enable = true;
       plugins = with pkgs.xfce; [
         thunar-archive-plugin
@@ -216,10 +218,23 @@
     nwg-hello
     nwg-panel
     ark
-    
+
   ];
 
   security.pam.services.hyprlock = {};
+
+  networking.firewall = {
+      enable = true;
+	  # Open ports in the firewall.
+		allowedTCPPortRanges = [
+	    { from = 1714; to = 1764; } # KDE Connect
+	    { from = 42000; to = 42001; } # Warpinator
+	  ];
+	  allowedUDPPortRanges = [
+	    { from = 1714; to = 1764; } # KDE Connect
+	    { from = 5353; to = 5353; } # Warpinator
+	  ];
+    };
 
   system.stateVersion = "24.05";
 }
