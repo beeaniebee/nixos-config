@@ -119,7 +119,7 @@
     xfce.thunar
     walk
     lunarvim
-    
+    zed-editor
   ];
 
   wayland.windowManager.hyprland = {
