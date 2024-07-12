@@ -62,10 +62,24 @@
   };
 
   boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    loader.efi.efiSysMountPoint = "/boot/efi";
-    initrd.systemd.enable = true;
+    loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+        efi.efiSysMountPoint = "/boot/efi";
+    };
+
+    initrd = {
+      systemd.enable = true;
+      # Setup keyfile
+      secrets = {
+        "/crypto_keyfile.bin" = null;
+      };
+
+      # Enable swap on luks
+      luks.devices."luks-37c02b36-d69d-4de1-af29-7736f35d93f5".device = "/dev/disk/by-uuid/37c02b36-d69d-4de1-af29-7736f35d93f5";
+      luks.devices."luks-37c02b36-d69d-4de1-af29-7736f35d93f5".keyFile = "/crypto_keyfile.bin";
+
+    };
   };
 
   users.users = {

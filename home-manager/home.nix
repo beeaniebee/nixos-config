@@ -112,7 +112,7 @@
     nerdfonts
     fantasque-sans-mono
     nixfmt-rfc-style
-    blueman
+    #blueman
     pass-wayland
     gnupg
     passff-host
@@ -341,6 +341,7 @@
   };
 
   services = {
+    blueman-applet.enable = true;
     gpg-agent = {
       enable = true;
       defaultCacheTtl = 34560000;
@@ -381,8 +382,8 @@
       settings = {
         ipc = "on";
         splash = false;
-        #preload = "~/.wallpaper.png";
-        #wallpaper = "eDP-1,~/.wallpaper.png";
+        preload = "~/.wallpaper.png";
+        wallpaper = "eDP-1,~/.wallpaper.png";
       };
     };
   };
