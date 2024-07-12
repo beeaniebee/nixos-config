@@ -23,8 +23,8 @@
     };
     pointerCursor = {
       gtk.enable = true;
-      package = pkgs.bibata-cursors;
-      name = "Catppuccin-Mocha-Mauve";
+      #package = pkgs.bibata-cursors;
+      #name = "Catppuccin-Mocha-Mauve";
       size = 20;
     };
   };
