@@ -25,10 +25,12 @@
     };
 
   boot.initrd.luks.devices."luks-214eb125-7ec9-4775-9978-346086f42279".device = "/dev/disk/by-uuid/214eb125-7ec9-4775-9978-346086f42279";
+  boot.initrd.luks.devices."luks-37c02b36-d69d-4de1-af29-7736f35d93f5".device = "/dev/disk/by-uuid/37c02b36-d69d-4de1-af29-7736f35d93f5";
 
   fileSystems."/boot/efi" =
     { device = "/dev/disk/by-uuid/26C0-432E";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
@@ -40,7 +42,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
