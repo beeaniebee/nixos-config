@@ -13,8 +13,8 @@
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
       #availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "input_leds" ];
       kernelModules = [ ];
-    }
-    systemd.enable = true;
+      systemd.enable = true;
+    };
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };

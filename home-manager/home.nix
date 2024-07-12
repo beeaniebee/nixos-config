@@ -243,8 +243,8 @@
     home-manager.enable = true;
     git = {
       enable = true;
-      userEmail = 29309688+beeaniebee@users.noreply.github.com
-      userName = beeaniebee;
+      userEmail = "29309688+beeaniebee@users.noreply.github.com";
+      userName = "beeaniebee";
     };
     gpg.enable = true;
     neovim = {
