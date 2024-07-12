@@ -264,7 +264,7 @@
     };
 
     gpaste.enable = true;
-    kdeconnect.enable = true
+    kdeconnect.enable = true;
 
     kitty = {
       enable = true;
