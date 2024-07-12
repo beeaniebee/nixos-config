@@ -119,6 +119,7 @@
     xfce.thunar
     walk
     lunarvim
+    
   ];
 
   wayland.windowManager.hyprland = {
@@ -240,21 +241,25 @@
 
   programs = {
     home-manager.enable = true;
-    git.enable = true;
+    git = {
+      enable = true;
+      userEmail = 29309688+beeaniebee@users.noreply.github.com
+      userName = beeaniebee;
+    };
     gpg.enable = true;
     neovim = {
       enable = true;
       defaultEditor = true;
       plugins = with pkgs.vimPlugins; [
-	nvim-lastplace
-	mason-nvim
-	mason-lspconfig-nvim
-	nvim-cmp
-	chadtree
-	FTerm-nvim
-	which-key-nvim
-	persisted-nvim
-	neoscroll-nvim
+        nvim-lastplace
+        mason-nvim
+        mason-lspconfig-nvim
+        nvim-cmp
+        chadtree
+        FTerm-nvim
+        which-key-nvim
+        persisted-nvim
+        neoscroll-nvim
       ];
     };
     kitty = {
@@ -268,13 +273,13 @@
       autosuggestion.enable = true;
 
       initExtra = ''
-	function lk {
-	  cd "$(walk --icons "$@")"
-	}
+        function lk {
+          cd "$(walk --icons "$@")"
+        }
       '';
 
       sessionVariables = {
-	EDITOR = "$(which nvim)";
+        EDITOR = "$(which nvim)";
       };
       syntaxHighlighting = {
         enable = true;

@@ -4,36 +4,35 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =[ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
 
-  boot.initrd = {
-    availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "input_leds" ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
+      #availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "input_leds" ];
+      kernelModules = [ ];
+    }
     systemd.enable = true;
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
   };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/865a7615-ad7e-40f0-bd77-536c915e00dd";
+    { device = "/dev/disk/by-uuid/f91ca1cc-fb81-4ffc-90d6-4ed086fb9228";
       fsType = "ext4";
     };
 
-  boot.initrd.luks.devices."luks-8ea832ad-f420-414d-bbaf-4179ecad5efd".device = "/dev/disk/by-uuid/8ea832ad-f420-414d-bbaf-4179ecad5efd";
+  boot.initrd.luks.devices."luks-214eb125-7ec9-4775-9978-346086f42279".device = "/dev/disk/by-uuid/214eb125-7ec9-4775-9978-346086f42279";
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/4746-28B0";
+    { device = "/dev/disk/by-uuid/26C0-432E";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
     };
-
-  fileSystems."/home/~beanie" =
-    { device = "/dev/disk/by-uuid/97ae19e3-54ef-4194-8caa-23fd69fc0e0d";
-      fsType = "ext4";
-    };
-
-  boot.initrd.luks.devices."luks-d4231690-29a1-4e04-ac55-ceb6dfcb726c".device = "/dev/disk/by-uuid/d4231690-29a1-4e04-ac55-ceb6dfcb726c";
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/489e11f7-bae8-404b-9dfd-4d59dc0d5850"; }
+    [ { device = "/dev/disk/by-uuid/45c79934-076c-43bc-b848-adcc590634c0"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -44,5 +43,5 @@
   # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

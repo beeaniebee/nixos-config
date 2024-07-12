@@ -83,17 +83,20 @@
     gvfs.enable = true;
     tumbler.enable = true;
     power-profiles-daemon.enable = true;
+    
     displayManager.sddm = {
       enable = true;
       package = pkgs.kdePackages.sddm;
       catppuccin.enable = true;
       wayland.enable = true;
     };
-
+    
     xserver = {
       enable = true;
-      videoDrivers = [ "amdgpu" ]; #"nvidia" ];
+      desktopManager.cinnamon.enable = true;
+      #videoDrivers = [ "amdgpu" ]; #"nvidia" ];
     };
+    cinnamon.apps.enable = true;
 
     usbmuxd = {
       #TODO: re-enable later
@@ -135,7 +138,7 @@
 
   hardware = {
     pulseaudio.enable = false;
-    openrazer.enable = true;
+    #openrazer.enable = true;
 
     #nvidia = {
     #  modesetting.enable = true;
@@ -182,11 +185,11 @@
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        rocm-opencl-icd
-        rocm-opencl-runtime
-        amdvlk
-      ];
+      #extraPackages = with pkgs; [
+        #rocm-opencl-icd
+        #rocm-opencl-runtime
+        #amdvlk
+      #];
     };
   };
 
