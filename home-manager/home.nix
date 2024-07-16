@@ -19,7 +19,7 @@
     homeDirectory = "/home/beanie";
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
-      EDITOR = "nvim";
+      EDITOR = lib.mkForce "lvim";
     };
     pointerCursor = {
       gtk.enable = true;
@@ -120,6 +120,7 @@
     walk
     lunarvim
     zed-editor
+    pyprland
   ];
 
   wayland.windowManager.hyprland = {
@@ -130,16 +131,18 @@
       #monitor = "eDP-1, 1920x1080@144, 0x0, 1.333333";
       "$mod" = "ALT";
       "$terminal" = "kitty";
-      "$fileManager" = "thunar";
+      "$fileManager" = "nemo";
       "$menu" = "yofi";
+      "$lockcmd" = "";
       bind = [
         "$mod, Q, exec, pgrep qalculate-gtk && hyprctl dispatch togglespecialworkspace calculator || qalculate-gtk &"
-        #"$mod, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enable"
+        "$mod, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enalbe"
         "$mod, F, exec, firefox"
-        "$mod, RETURN, exec, $terminal"
+        "$mod SHIFT, RETURN, exec, $terminal"
         "$mod, E, exec, $fileManager"
         "$mod, P, exec, $menu"
         "$mod SHIFT, C, killactive"
+        "$mod SHIFT, CTRL, l, exec, $lockcmd"
 
         # Move focus with mainMod + arrow keys
         "$mod, left, movefocus, l"
@@ -279,8 +282,12 @@
         }
       '';
 
+      shellAliases = {
+        stdp = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run 'steam-run ~/Documents/Mods/Stardrop/Internal $@'";
+      };
+
       sessionVariables = {
-        EDITOR = "$(which nvim)";
+        EDITOR = "$(which lvim)";
       };
       syntaxHighlighting = {
         enable = true;
