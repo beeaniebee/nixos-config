@@ -121,6 +121,9 @@
     lunarvim
     zed-editor
     pyprland
+    onedrive
+    onedrivegui
+    bottles
   ];
 
   wayland.windowManager.hyprland = {
