@@ -34,7 +34,10 @@
     unstable-overlays = {
       nixpkgs.overlays = [
         (final: prev: {
-          unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+          unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
         })
       ];
     };
