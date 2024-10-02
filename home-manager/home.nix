@@ -21,12 +21,12 @@
       NIXOS_OZONE_WL = "1";
       EDITOR = lib.mkForce "lvim";
     };
-    pointerCursor = {
-      gtk.enable = true;
+    #pointerCursor = {
+      #gtk.enable = true;
       #package = pkgs.bibata-cursors;
       #name = "Catppuccin-Mocha-Mauve";
-      size = 20;
-    };
+      #size = 20;
+    #};
   };
 
   catppuccin = {
@@ -126,7 +126,7 @@
     xfce.thunar
     walk
     lunarvim
-    zed-editor
+    #zed-editor
     pyprland
     onedrive
     onedrivegui
