@@ -126,7 +126,7 @@
     xfce.thunar
     walk
     lunarvim
-    #zed-editor
+    unstable.zed-editor
     pyprland
     onedrive
     onedrivegui

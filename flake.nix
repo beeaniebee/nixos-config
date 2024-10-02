@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
@@ -15,16 +16,38 @@
     };
   };
 
-  outputs = { self, nixpkgs, nur, catppuccin, home-manager, zen-browser, ... } @ inputs: let inherit (self) outputs; in {
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    nur,
+    catppuccin,
+    home-manager,
+    zen-browser,
+    ...
+  } @ inputs:
+  let
+    inherit (self) outputs;
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+
+    unstable-overlays = {
+      nixpkgs.overlays = [
+        (final: prev: {
+          unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        })
+      ];
+    };
+  in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       nixos-hp = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         specialArgs = { inherit inputs outputs; };
         modules = [
           ./nixos/configuration.nix
           nur.nixosModules.nur
+          unstable-overlays
           # This adds a nur configuration option.
           # Use `config.nur` for packages like this:
           # ({ config, ... }: {
