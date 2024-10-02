@@ -534,13 +534,29 @@
         "type": "github"
       }
     },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1727348695,
+        "narHash": "sha256-J+PeFKSDV+pHL7ukkfpVzCOO7mBSrrpJ3svwBFABbhI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1925c603f17fc89f4c8f6bf6f631a802ad85d784",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
-        "lastModified": 1727898366,
-        "narHash": "sha256-8YJQ3ezwzdoZ37F+2WStJeAF5gZahqXPB19uTEVPiq4=",
+        "lastModified": 1727901121,
+        "narHash": "sha256-J/yoPtRiSDQrBFRZf0HY6TD5U4Wlx5su/z1gVz2GXlk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "400832822d42bdef1a193e424865c4f1b54dcbfa",
+        "rev": "d311aa6727603c65ab87a068099f136bf4b6f194",
         "type": "github"
       },
       "original": {
@@ -603,7 +619,8 @@
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
         "pyprland": "pyprland",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "zen-browser": "zen-browser"
       }
     },
     "stylix": {
@@ -815,6 +832,24 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1727721329,
+        "narHash": "sha256-QYlWZwUSwrM7BuO+dXclZIwoPvBIuJr6GpFKv9XKFPI=",
+        "owner": "MarceColl",
+        "repo": "zen-browser-flake",
+        "rev": "e6ab73f405e9a2896cce5956c549a9cc359e5fcc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MarceColl",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
