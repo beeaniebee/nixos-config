@@ -86,7 +86,7 @@
     beanie = {
       initialPassword = "nixos";
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "openrazer" "input" ];
+      extraGroups = [ "wheel" "networkmanager" "openrazer" "input" "libvirtd" ];
       shell = pkgs.zsh;
     };
   };
@@ -141,6 +141,7 @@
     xfconf.enable = true;
     gpaste.enable = true;
     kdeconnect.enable = true;
+    virt-manager.enable = true;
     thunar = {
       enable = true;
       plugins = with pkgs.xfce; [
@@ -150,6 +151,7 @@
   };
 
   security.rtkit.enable = true;
+  virtualisation.libvirtd.enable = true;
 
   hardware = {
     pulseaudio.enable = false;
@@ -230,7 +232,9 @@
     nwg-hello
     nwg-panel
     ark
-
+    virtiofsd
+    guestfs-tools
+    inputs.zen-browser.packages."${system}".specific
   ];
 
   security.pam.services.hyprlock = {};

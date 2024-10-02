@@ -64,6 +64,13 @@
     style.catppuccin.enable = true;
   };
 
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };
+  };
+
   home.packages = with pkgs; [
     firefox
     kate
@@ -123,6 +130,9 @@
     pyprland
     onedrive
     onedrivegui
+    virt-manager
+    freerdp
+    appimage-run
   ];
 
   wayland.windowManager.hyprland = {
