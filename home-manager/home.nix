@@ -71,7 +71,8 @@
     };
   };
 
-  home.packages = with pkgs; [
+  home.packages =
+  (with pkgs; [
     firefox
     kate
     #cura
@@ -132,10 +133,11 @@
     virt-manager
     freerdp
     appimage-run
-  ];
-  home.packages = with pkgs.unstable; [
+  ])
+  ++ (with pkgs.unstable; [
     zed-editor
-  ];
+  ]);
+
 
   wayland.windowManager.hyprland = {
     enable = true;
