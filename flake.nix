@@ -6,6 +6,7 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
     pyprland.url = "github:hyprland-community/pyprland";
     nur.url = "github:nix-community/NUR";
     home-manager = {
@@ -14,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nur, catppuccin, home-manager, ... } @ inputs: let inherit (self) outputs; in {
+  outputs = { self, nixpkgs, nur, catppuccin, home-manager, zen-browser, ... } @ inputs: let inherit (self) outputs; in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
