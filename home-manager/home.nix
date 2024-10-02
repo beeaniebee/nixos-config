@@ -126,13 +126,15 @@
     xfce.thunar
     walk
     lunarvim
-    unstable.zed-editor
     pyprland
     onedrive
     onedrivegui
     virt-manager
     freerdp
     appimage-run
+  ];
+  home.packages = with pkgs.unstable; [
+    zed-editor
   ];
 
   wayland.windowManager.hyprland = {
