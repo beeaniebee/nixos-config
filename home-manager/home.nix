@@ -3,6 +3,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: {
   # You can import other home-manager modules here
@@ -35,7 +36,7 @@
   };
 
   xdg = {
-    enable = true;
+    enable = false;
     mime.enable = true;
     mimeApps.enable = true;
     portal = {
@@ -73,12 +74,13 @@
 
   home.packages =
   (with pkgs; [
-    firefox
+    #firefox
     kate
     #cura
     #vscode
     qalculate-qt
-    octave
+    octaveFull
+    octavePackages.symbolic
     #logisim-evolution
     #minecraft - marked as broken, refusing to evaluate
     steam
@@ -87,12 +89,12 @@
     printrun
     discord
     google-chrome
-    thunderbird
-    vlc
-    onlyoffice-bin
+    #thunderbird
+    #vlc
+    #onlyoffice-bin
     pdfarranger
     solaar
-    polychromatic
+    #polychromatic
     kitty
     waybar
     nwg-bar
@@ -102,8 +104,9 @@
     nwg-hello
     nwg-displays
     glib
+    ark
     yofi
-    helix
+    #helix
     networkmanagerapplet
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
@@ -115,9 +118,9 @@
     pavucontrol
     dunst
     polkit-kde-agent
-    nvidia-vaapi-driver
+    #nvidia-vaapi-driver
     ffmpeg
-    nerdfonts
+    #nerdfonts
     fantasque-sans-mono
     nixfmt-rfc-style
     #blueman
@@ -130,11 +133,12 @@
     pyprland
     onedrive
     onedrivegui
-    virt-manager
-    freerdp
+    #virt-manager
+    #freerdp
     appimage-run
+    #apfs-fuse
   ])
-  ++ (with pkgs.unstable; [
+  ++ (with pkgs-unstable; [
     zed-editor
   ]);
 

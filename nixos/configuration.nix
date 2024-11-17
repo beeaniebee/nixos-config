@@ -41,13 +41,13 @@
   nix = {
     settings = {
       experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
+      #auto-optimise-store = true;
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
       substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
-
+    optimise.automatic = true;
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
@@ -90,6 +90,10 @@
       shell = pkgs.zsh;
     };
   };
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+  ];
 
   services = {
     printing.enable = true;
@@ -219,7 +223,7 @@
     libimobiledevice
     ifuse
     power-profiles-daemon
-    openrazer-daemon
+    #openrazer-daemon
     pciutils
     aha
     clinfo
@@ -231,7 +235,6 @@
     nwg-look
     nwg-hello
     nwg-panel
-    ark
     virtiofsd
     guestfs-tools
     inputs.zen-browser.packages."${system}".specific

@@ -2,8 +2,8 @@
   description = "beanie's nixos flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
@@ -19,7 +19,7 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
+    #nixpkgs-unstable,
     nur,
     catppuccin,
     home-manager,
@@ -30,27 +30,21 @@
     inherit (self) outputs;
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-
-    unstable-overlays = {
-      nixpkgs.overlays = [
-        (final: prev: {
-          unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-        })
-      ];
-    };
   in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       nixos-hp = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
+        #specialArgs = {
+          #inherit inputs outputs;
+          #pkgs-unstable = import nixpkgs-unstable {
+          #  inherit system;
+            config.allowUnfree = true;
+          #};
+        #};
         modules = [
           ./nixos/configuration.nix
           nur.nixosModules.nur
-          unstable-overlays
           # This adds a nur configuration option.
           # Use `config.nur` for packages like this:
           # ({ config, ... }: {
@@ -61,7 +55,13 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 	        home-manager.backupFileExtension = "bak";
-            home-manager.extraSpecialArgs = { inherit inputs outputs; };
+            #home-manager.extraSpecialArgs = {
+              #inherit inputs outputs;
+              #pkgs-unstable = import nixpkgs-unstable {
+              #  inherit system;
+              #  config.allowUnfree = true;
+              #};
+            #};
             home-manager.users.beanie = {
               imports = [
                 ./home-manager/home.nix
