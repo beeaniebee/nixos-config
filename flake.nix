@@ -2,8 +2,8 @@
   description = "beanie's nixos flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
@@ -19,7 +19,7 @@
   outputs = {
     self,
     nixpkgs,
-    #nixpkgs-unstable,
+    nixpkgs-unstable,
     nur,
     catppuccin,
     home-manager,
@@ -37,10 +37,10 @@
       nixos-hp = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs outputs;
-          #pkgs-unstable = import nixpkgs-unstable {
-          #  inherit system;
-          #  config.allowUnfree = true;
-          #};
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
         };
         modules = [
           ./nixos/configuration.nix
@@ -55,13 +55,13 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 	        home-manager.backupFileExtension = "bak";
-            #home-manager.extraSpecialArgs = {
-              #inherit inputs outputs;
-              #pkgs-unstable = import nixpkgs-unstable {
-              #  inherit system;
-              #  config.allowUnfree = true;
-              #};
-            #};
+            home-manager.extraSpecialArgs = {
+              inherit inputs outputs;
+              pkgs-unstable = import nixpkgs-unstable {
+                inherit system;
+                config.allowUnfree = true;
+              };
+            };
             home-manager.users.beanie = {
               imports = [
                 ./home-manager/home.nix

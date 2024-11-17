@@ -3,7 +3,7 @@
   lib,
   config,
   pkgs,
-  #pkgs-unstable,
+  pkgs-unstable,
   ...
 }: {
   # You can import other home-manager modules here
@@ -137,10 +137,9 @@
     #freerdp
     appimage-run
     #apfs-fuse
+  ])
+  ++ (with pkgs-unstable; [
     zed-editor
-  #])
-  #++ (with pkgs-unstable; [
-  #  zed-editor
   ]);
 
 
