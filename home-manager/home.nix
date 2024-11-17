@@ -137,6 +137,7 @@
     #freerdp
     appimage-run
     #apfs-fuse
+    nix-tree
   ])
   ++ (with pkgs-unstable; [
     zed-editor
