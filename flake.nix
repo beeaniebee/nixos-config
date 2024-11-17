@@ -35,13 +35,13 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       nixos-hp = nixpkgs.lib.nixosSystem {
-        #specialArgs = {
-          #inherit inputs outputs;
+        specialArgs = {
+          inherit inputs outputs;
           #pkgs-unstable = import nixpkgs-unstable {
           #  inherit system;
           #  config.allowUnfree = true;
           #};
-        #};
+        };
         modules = [
           ./nixos/configuration.nix
           nur.nixosModules.nur
