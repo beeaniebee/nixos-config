@@ -418,5 +418,5 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
 }
