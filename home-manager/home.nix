@@ -22,12 +22,12 @@
       NIXOS_OZONE_WL = "1";
       EDITOR = lib.mkForce "lvim";
     };
-    #pointerCursor = {
-      #gtk.enable = true;
-      #package = pkgs.bibata-cursors;
-      #name = "Catppuccin-Mocha-Mauve";
-      #size = 20;
-    #};
+    pointerCursor = {
+      gtk.enable = true;
+      package = pkgs.bibata-cursors;
+      name = "Catppuccin-Mocha-Mauve";
+      size = 20;
+    };
   };
 
   catppuccin = {
