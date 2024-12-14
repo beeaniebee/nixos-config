@@ -44,7 +44,7 @@
         };
         modules = [
           ./nixos/configuration.nix
-          nur.nixosModules.nur
+          nur.modules.nixos.default
           # This adds a nur configuration option.
           # Use `config.nur` for packages like this:
           # ({ config, ... }: {
