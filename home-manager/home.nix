@@ -271,26 +271,12 @@
       userName = "beeaniebee";
     };
     gpg.enable = true;
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      plugins = with pkgs.vimPlugins; [
-        nvim-lastplace
-        mason-nvim
-        mason-lspconfig-nvim
-        nvim-cmp
-        chadtree
-        FTerm-nvim
-        which-key-nvim
-        persisted-nvim
-        neoscroll-nvim
-      ];
-    };
 
     kitty = {
       enable = true;
       #catppuccin.enable = true;
     };
+
     zsh = {
       enable = true;
       enableCompletion = true;
