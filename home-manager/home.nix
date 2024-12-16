@@ -137,7 +137,6 @@
     #freerdp
     appimage-run
     #apfs-fuse
-    lvim
     nix-tree
   ])
   ++ (with pkgs-unstable; [

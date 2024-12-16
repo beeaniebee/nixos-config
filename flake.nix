@@ -7,7 +7,7 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     pyprland.url = "github:hyprland-community/pyprland";
     nur.url = "github:nix-community/NUR";
     home-manager = {

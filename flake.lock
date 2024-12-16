@@ -393,11 +393,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1734129402,
-        "narHash": "sha256-2VFpN+qCJWAwn/awPBG8XT7ZY9dJsjDkg2zOLnXbSo4=",
+        "lastModified": 1734306854,
+        "narHash": "sha256-Px7iwYO1iUxgDM7GreZRWhFCgD65MoNhQp+nYnhWGM4=",
         "ref": "refs/heads/main",
-        "rev": "3cba4ba44e7ba3cc8bb67ac71bc61245b5aca347",
-        "revCount": 5540,
+        "rev": "de3ad245dcbcd42c88e9afc48264bdb8f2356c15",
+        "revCount": 5543,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/hyprwm/Hyprland"
@@ -597,11 +597,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1733940404,
-        "narHash": "sha256-Pj39hSoUA86ZePPF/UXiYHHM7hMIkios8TYG29kQT4g=",
+        "lastModified": 1734119587,
+        "narHash": "sha256-AKU6qqskl0yf2+JdRdD0cfxX4b9x3KKV5RqA6wijmPM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5d67ea6b4b63378b9c13be21e2ec9d1afc921713",
+        "rev": "3566ab7246670a43abd2ffa913cc62dad9cdf7d5",
         "type": "github"
       },
       "original": {
@@ -613,11 +613,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1733808091,
-        "narHash": "sha256-KWwINTQelKOoQgrXftxoqxmKFZb9pLVfnRvK270nkVk=",
+        "lastModified": 1734083684,
+        "narHash": "sha256-5fNndbndxSx5d+C/D0p/VF32xDiJCJzyOqorOYW4JEo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a0f3e10d94359665dba45b71b4227b0aeb851f8e",
+        "rev": "314e12ba369ccdb9b352a4db26ff419f7c49fa84",
         "type": "github"
       },
       "original": {
@@ -629,11 +629,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1733940404,
-        "narHash": "sha256-Pj39hSoUA86ZePPF/UXiYHHM7hMIkios8TYG29kQT4g=",
+        "lastModified": 1734119587,
+        "narHash": "sha256-AKU6qqskl0yf2+JdRdD0cfxX4b9x3KKV5RqA6wijmPM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5d67ea6b4b63378b9c13be21e2ec9d1afc921713",
+        "rev": "3566ab7246670a43abd2ffa913cc62dad9cdf7d5",
         "type": "github"
       },
       "original": {
@@ -677,11 +677,11 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1727348695,
-        "narHash": "sha256-J+PeFKSDV+pHL7ukkfpVzCOO7mBSrrpJ3svwBFABbhI=",
+        "lastModified": 1733940404,
+        "narHash": "sha256-Pj39hSoUA86ZePPF/UXiYHHM7hMIkios8TYG29kQT4g=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1925c603f17fc89f4c8f6bf6f631a802ad85d784",
+        "rev": "5d67ea6b4b63378b9c13be21e2ec9d1afc921713",
         "type": "github"
       },
       "original": {
@@ -698,11 +698,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1734153655,
-        "narHash": "sha256-CEZ8VLNGrvZBqM+BoPeXaGy3CurQVFWpavuIAuNDtZM=",
+        "lastModified": 1734324956,
+        "narHash": "sha256-Dwoy532JsbDjHhKwP1Ixks+Yy/PMv/8S5q/bxO70DeA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3cf0182e397010be9aca4f88a77bea8092a6c4e3",
+        "rev": "636788065a20eef93ce0a0d61af740dd295c1c62",
         "type": "github"
       },
       "original": {
@@ -768,11 +768,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1733145259,
-        "narHash": "sha256-+MisSOoIAzwBOdv/UNv5BiBL1TPf+nQM9JAhBiq5CTo=",
+        "lastModified": 1734283345,
+        "narHash": "sha256-yujPvwmA2bq360LOViKNGx9E4cGsh1YO9so1jT/FT5U=",
         "owner": "hyprland-community",
         "repo": "pyprland",
-        "rev": "02b14b742eaf56473f3875808631dec2e672ae35",
+        "rev": "0b640576dbc69b1fb79a53ce959d3a8a8bcaa034",
         "type": "github"
       },
       "original": {
@@ -1037,15 +1037,15 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1727721329,
-        "narHash": "sha256-QYlWZwUSwrM7BuO+dXclZIwoPvBIuJr6GpFKv9XKFPI=",
-        "owner": "MarceColl",
+        "lastModified": 1734232136,
+        "narHash": "sha256-rQd9jiPTGVchefiwJhx1xUlCLcnOCWQ7KlQ+Pkio9zU=",
+        "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "e6ab73f405e9a2896cce5956c549a9cc359e5fcc",
+        "rev": "6acd5e9515e0d53347b7883ac02ac7ab4bd03a2c",
         "type": "github"
       },
       "original": {
-        "owner": "MarceColl",
+        "owner": "0xc000022070",
         "repo": "zen-browser-flake",
         "type": "github"
       }
