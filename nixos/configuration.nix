@@ -40,7 +40,7 @@
   nix = {
     settings = {
       experimental-features = "nix-command flakes";
-      #auto-optimise-store = true;
+      auto-optimise-store = true;
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
       substituters = ["https://hyprland.cachix.org"];
@@ -237,6 +237,9 @@
     virtiofsd
     guestfs-tools
     inputs.zen-browser.packages."${system}".specific
+    obs-studio
+    obs-studio-plugins.droidcam-obs
+    droidcam
   ];
 
   security.pam.services.hyprlock = {};
