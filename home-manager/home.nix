@@ -138,6 +138,8 @@
     appimage-run
     #apfs-fuse
     nix-tree
+    obs-studio
+    obs-studio-plugins.droidcam-obs
   ])
   ++ (with pkgs-unstable; [
     zed-editor
