@@ -237,9 +237,6 @@
     virtiofsd
     guestfs-tools
     inputs.zen-browser.packages."${system}".specific
-    obs-studio
-    obs-studio-plugins.droidcam-obs
-    droidcam
   ];
 
   security.pam.services.hyprlock = {};
