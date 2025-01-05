@@ -58,6 +58,7 @@
   catppuccin = {
     enable = true;
     flavor = "mocha";
+    sddm.enable = true;
   };
 
   boot = {
@@ -104,7 +105,7 @@
     displayManager.sddm = {
       enable = true;
       package = pkgs.kdePackages.sddm;
-      catppuccin.enable = true;
+      #catppuccin.enable = true;
       wayland.enable = true;
     };
 
@@ -236,7 +237,7 @@
     nwg-panel
     virtiofsd
     guestfs-tools
-    inputs.zen-browser.packages."${system}".specific
+    inputs.zen-browser.packages."${system}".default
   ];
 
   security.pam.services.hyprlock = {};

@@ -33,6 +33,7 @@
   catppuccin = {
       enable = true;
       flavor = "mocha";
+      kvantum.enable = true;
   };
 
   xdg = {
@@ -61,9 +62,9 @@
     };
   };
 
-  qt = {
-    style.catppuccin.enable = true;
-  };
+  #qt = {
+  #  style.catppuccin.enable = true;
+  #};
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
@@ -143,6 +144,8 @@
   ])
   ++ (with pkgs-unstable; [
     zed-editor
+    lutris
+    wine
   ]);
 
 
