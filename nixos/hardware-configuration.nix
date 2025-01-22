@@ -12,10 +12,10 @@
     initrd = {
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
       #availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "input_leds" ];
-      kernelModules = [ ];
+      kernelModules = [ "iwlwifi" ];
       systemd.enable = true;
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "iwlwifi" ];
     extraModulePackages = [ ];
   };
 
@@ -41,8 +41,10 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
+  #networking.interfaces.wlo0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.enableAllFirmware = true;
+  hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

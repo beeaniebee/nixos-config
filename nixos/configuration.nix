@@ -117,8 +117,7 @@
     cinnamon.apps.enable = true;
 
     usbmuxd = {
-      #TODO: re-enable later
-      enable = false;#true;
+      enable = true;
       package = pkgs.usbmuxd2;
     };
 
@@ -214,6 +213,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    firmware-manager
+    fwupd
     vim
     wget
     git
