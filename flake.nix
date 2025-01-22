@@ -10,6 +10,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     pyprland.url = "github:hyprland-community/pyprland";
     nur.url = "github:nix-community/NUR";
+    lanzaboote.url = "github:nix-community/lanzaboote";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -18,6 +18,7 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   nixpkgs = {
@@ -63,9 +64,15 @@
 
   boot = {
     loader = {
-        systemd-boot.enable = true;
+        systemd-boot.enable = lib.mkForce false;
         efi.canTouchEfiVariables = true;
         efi.efiSysMountPoint = "/boot/efi";
+    };
+
+    bootspec.enable = true;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
     };
 
     initrd = {
