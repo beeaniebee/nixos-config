@@ -72,7 +72,7 @@
     bootspec.enable = true;
     lanzaboote = {
       enable = true;
-      pkiBundle = "/etc/secureboot";
+      pkiBundle = "/var/lib/sbctl";
     };
 
     initrd = {
@@ -244,6 +244,7 @@
     nwg-panel
     virtiofsd
     guestfs-tools
+    sbctl
     inputs.zen-browser.packages."${system}".default
   ];
 
