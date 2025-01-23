@@ -5,6 +5,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }: {
   # You can import other NixOS modules here
@@ -244,9 +245,11 @@
     nwg-panel
     virtiofsd
     guestfs-tools
-    sbctl
     inputs.zen-browser.packages."${system}".default
-  ];
+  ]
+  ++ (with pkgs-unstable; [
+    sbctl
+    ]);
 
   security.pam.services.hyprlock = {};
 
