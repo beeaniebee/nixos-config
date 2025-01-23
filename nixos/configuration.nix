@@ -220,7 +220,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    firmware-manager
     fwupd
     vim
     wget
