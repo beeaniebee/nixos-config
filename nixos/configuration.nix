@@ -53,7 +53,7 @@
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 
-  networking.hostName = "nixos-hp";
+  networking.hostName = "nixphyrus";
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
 
