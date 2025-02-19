@@ -75,26 +75,13 @@
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
-
-    initrd = {
-      systemd.enable = true;
-      # Setup keyfile
-      secrets = {
-        "/crypto_keyfile.bin" = null;
-      };
-
-      # Enable swap on luks
-      luks.devices."luks-37c02b36-d69d-4de1-af29-7736f35d93f5".device = "/dev/disk/by-uuid/37c02b36-d69d-4de1-af29-7736f35d93f5";
-      luks.devices."luks-37c02b36-d69d-4de1-af29-7736f35d93f5".keyFile = "/crypto_keyfile.bin";
-
-    };
   };
 
   users.users = {
     beanie = {
       initialPassword = "nixos";
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "openrazer" "input" "libvirtd" ];
+      extraGroups = [ "wheel" "networkmanager" "input" "libvirtd" ];
       shell = pkgs.zsh;
     };
   };
