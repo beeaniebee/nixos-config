@@ -138,6 +138,8 @@
     #freerdp
     appimage-run
     #apfs-fuse
+    gparted
+    baobab
     nix-tree
     obs-studio
     obs-studio-plugins.droidcam-obs

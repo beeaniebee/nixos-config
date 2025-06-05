@@ -245,6 +245,9 @@
     nwg-panel
     virtiofsd
     guestfs-tools
+    btrfs-progs
+    hfsprogs
+    exfatprogs
     inputs.zen-browser.packages."${system}".default
   ]
   ++ (with pkgs-unstable; [
