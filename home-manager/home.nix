@@ -78,7 +78,7 @@
     #firefox
     kate
     #cura
-    #vscode
+    vscode
     qalculate-qt
     octaveFull
     octavePackages.symbolic
