@@ -3,7 +3,7 @@
   lib,
   config,
   pkgs,
-  pkgs-unstable,
+  #pkgs-unstable,
   ...
 }: {
   # You can import other home-manager modules here
@@ -76,7 +76,9 @@
   home.packages =
   (with pkgs; [
     #firefox
-    kate
+    kdePackages.kate
+    kdePackages.ark
+    kdePackages.polkit-kde-agent-1
     #cura
     vscode
     qalculate-qt
@@ -105,7 +107,6 @@
     nwg-hello
     nwg-displays
     glib
-    ark
     yofi
     #helix
     networkmanagerapplet
@@ -118,7 +119,6 @@
     wlroots
     pavucontrol
     dunst
-    polkit-kde-agent
     #nvidia-vaapi-driver
     ffmpeg
     #nerdfonts
@@ -143,8 +143,8 @@
     nix-tree
     obs-studio
     obs-studio-plugins.droidcam-obs
-  ])
-  ++ (with pkgs-unstable; [
+#  ])
+#  ++ (with pkgs-unstable; [
     zed-editor
     lutris
     wine
@@ -152,7 +152,7 @@
 
 
   wayland.windowManager.hyprland = {
-    enable = true;
+    enable = false;
     systemd.variables = ["--all"]; #if programs don't work in systemd services, but do on the terminal
     #catppuccin.enable = true;
     settings = {
@@ -290,7 +290,7 @@
       enableVteIntegration = true;
       autosuggestion.enable = true;
 
-      initExtra = ''
+      initContent = ''
         function lk {
           cd "$(walk --icons "$@")"
         }
@@ -325,7 +325,7 @@
     };
 
     hyprlock = {
-      enable = true;
+      enable = false;
       settings = {
         general = {
           disable_loading_bar = true;
@@ -367,7 +367,7 @@
       enable = true;
       defaultCacheTtl = 34560000;
       maxCacheTtl = 34560000;
-      pinentryPackage = pkgs.pinentry-qt;
+      pinentry.package = pkgs.pinentry-qt;
       enableScDaemon = false;
     };
 
@@ -377,7 +377,7 @@
     };
 
     hypridle = {
-      enable = true;
+      enable = false;
       settings = {
         general = {
           after_sleep_cmd = "hyprctl dispatch dpms on";
@@ -399,7 +399,7 @@
       };
     };
     hyprpaper = {
-      enable = true;
+      enable = false;
       settings = {
         ipc = "on";
         splash = false;

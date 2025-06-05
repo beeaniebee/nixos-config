@@ -5,7 +5,7 @@
   lib,
   config,
   pkgs,
-  pkgs-unstable,
+  #pkgs-unstable,
   ...
 }: {
   # You can import other NixOS modules here
@@ -53,6 +53,8 @@
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "us";
   networking.hostName = "nixos-hp";
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
@@ -100,25 +102,28 @@
   };
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    nerd-fonts.fantasque-sans-mono
   ];
 
   services = {
+    pulseaudio.enable = false;
     printing.enable = true;
     blueman.enable = true;
     gvfs.enable = true;
     tumbler.enable = true;
     power-profiles-daemon.enable = true;
+    #desktopManager.cosmic.enable = true;
+    #displayManager.cosmic-greeter.enable = true;
 
     displayManager.sddm = {
       enable = true;
-      package = pkgs.kdePackages.sddm;
-      #catppuccin.enable = true;
       wayland.enable = true;
+      package = pkgs.kdePackages.sddm;
     };
 
     xserver = {
       enable = true;
+      xkb.layout = "us";
       desktopManager.cinnamon.enable = true;
       #videoDrivers = [ "amdgpu" ]; #"nvidia" ];
     };
@@ -165,7 +170,6 @@
   virtualisation.libvirtd.enable = true;
 
   hardware = {
-    pulseaudio.enable = false;
     #openrazer.enable = true;
 
     #nvidia = {
@@ -220,14 +224,15 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages =
+  (with pkgs; [
+    kdePackages.plasma-pa
     fwupd
     vim
     wget
     git
     curl
     pavucontrol
-    plasma-pa
     libimobiledevice
     ifuse
     power-profiles-daemon
@@ -249,12 +254,12 @@
     hfsprogs
     exfatprogs
     inputs.zen-browser.packages."${system}".default
-  ]
-  ++ (with pkgs-unstable; [
+#  )]
+#  ++ (with pkgs-unstable; [
     sbctl
-    ]);
+  ]);
 
-  security.pam.services.hyprlock = {};
+  #security.pam.services.hyprlock = {};
 
   networking.firewall = {
       enable = true;
