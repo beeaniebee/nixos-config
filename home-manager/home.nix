@@ -80,7 +80,7 @@
     kdePackages.ark
     kdePackages.polkit-kde-agent-1
     #cura
-    vscode
+    #vscode
     qalculate-qt
     octaveFull
     octavePackages.symbolic

@@ -6,6 +6,7 @@
   config,
   pkgs,
   #pkgs-unstable,
+  vscode-pkgs,
   ...
 }: {
   # You can import other NixOS modules here
@@ -226,6 +227,7 @@
 
   environment.systemPackages =
   (with pkgs; [
+    vscode-pkgs.vscode
     kdePackages.plasma-pa
     fwupd
     vim
@@ -254,8 +256,6 @@
     hfsprogs
     exfatprogs
     inputs.zen-browser.packages."${system}".default
-#  )]
-#  ++ (with pkgs-unstable; [
     sbctl
   ]);
 

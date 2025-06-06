@@ -11,7 +11,8 @@
     pyprland.url = "github:hyprland-community/pyprland";
     nur.url = "github:nix-community/NUR";
     lanzaboote.url = "github:nix-community/lanzaboote";
-    home-manager = {
+    vscode-nixpkgs.url = "github:NixOS/nixpkgs/dd613136ee91f67e5dba3f3f41ac99ae89c5406b";
+      home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -25,19 +26,25 @@
     catppuccin,
     home-manager,
     zen-browser,
+    vscode-nixpkgs,
     ...
   } @ inputs:
   let
     inherit (self) outputs;
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+
+    vscode-pkgs = import vscode-nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       nixos-hp = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs outputs;
+          inherit inputs outputs vscode-pkgs;
           #pkgs-unstable = import nixpkgs-unstable {
           #  inherit system;
           #  config.allowUnfree = true;
