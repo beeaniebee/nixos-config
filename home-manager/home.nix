@@ -159,16 +159,35 @@
       "$terminal" = "kitty";
       "$fileManager" = "nemo";
       "$menu" = "yofi";
-      "$lockcmd" = "";
+      "$lockcmd" = "swaylock -f";
       bind = [
-        "$mod, Q, exec, pgrep qalculate-gtk && hyprctl dispatch togglespecialworkspace calculator || qalculate-gtk &"
-        "$mod, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enalbe"
+        # Application Launchers
+        "$mod, P, exec, $menu"                        # Launch dmenu
+        "$mod, N, exec, dunstctl close"                   # Close last dunst notification
+        "$mod SHIFT, N, exec, dunstctl close-all"         # Close all dunst notifications
+        "$mod SHIFT, PERIOD, exec, dunstctl context"      # Show dunst context menu
+        "$mod SHIFT, RETURN, exec, $terminal"             # Launch terminal
+        #"$mod, E, exec, $fileManager"
         "$mod, F, exec, firefox"
-        "$mod SHIFT, RETURN, exec, $terminal"
-        "$mod, E, exec, $fileManager"
-        "$mod, P, exec, $menu"
-        "$mod SHIFT, C, killactive"
-        "$mod SHIFT, CTRL, l, exec, $lockcmd"
+        "$mod, Q, exec, pgrep qalculate-gtk && hyprctl dispatch togglespecialworkspace calculator || qalculate-gtk &"
+        "$mod, O, exec, obsidian"                         # Launch Obsidian
+
+        # Example special workspace (scratchpad)
+        "$mod, grave, togglespecialworkspace, magic"
+        "$mod SHIFT, grave, movetoworkspace, special:magic"
+  
+        # Brightness & Volume (assumes light & pamixer or custom scripts)
+        ", XF86MonBrightnessUp, exec, light -A 5"         # Increase brightness
+        ", XF86MonBrightnessDown, exec, light -U 5"       # Decrease brightness
+        ", XF86AudioLowerVolume, exec, pamixer -d 5"      # Decrease volume
+        ", XF86AudioRaiseVolume, exec, pamixer -i 5"      # Increase volume
+        ", XF86AudioMute, exec, pamixer -t"               # Toggle mute
+  
+        # Lock Screen
+        "$mod SHIFT, CTRL L, exec, $lockcmd"           # Lock screen
+  
+        # Window Management
+        "$mod, B, togglefloating"                         # Toggle floating (alt for togglebar)
 
         # Move focus with mainMod + arrow keys
         "$mod, left, movefocus, l"
@@ -180,12 +199,35 @@
         "$mod SHIFT, left, resizeactive, -50 0"
         "$mod SHIFT, up, resizeactive, 0 -50"
         "$mod SHIFT, down, resizeactive, 0 50"
-
-        # Example special workspace (scratchpad)
-        "$mod, grave, togglespecialworkspace, magic"
-        "$mod SHIFT, grave, movetoworkspace, special:magic"
-
-        "$mod SHIFT, Q, exit"
+  
+        "$mod, RETURN, swapactiveworkspaces"              # Similar to zoom/master behavior
+        "$mod, TAB, hyprexpo:expo, toggle # can be: toggle, off/disable or on/enalbe"
+        "$mod+SHIFT, C, killactive"                       # Close focused window
+  
+        # Layout switching (Hyprland uses workspaces & rules, not layouts)
+        #"$mod, T, exec, set-layout tiling"                # Pseudo-command for example
+        "$mod, F, fullscreen, 1"                          # Fullscreen current window
+        "$mod+SHIFT, F, fullscreen, 1"                    # Alternate fullscreen
+        #"$mod, M, exec, set-layout monocle"               # Custom layout handler
+        #"$mod+SHIFT, M, exec, set-layout monocle-alt"     # Alternate monocle
+  
+        "$mod, SPACE, togglesplit"                        # Toggle layout split
+        "$mod+SHIFT, SPACE, togglefloating"               # Toggle floating mode
+  
+        "$mod, 0, workspace, all"                         # View all workspaces (pseudo)
+        "$mod+SHIFT, 0, movetoworkspace, all"             # Move window to all workspaces
+  
+        "$mod, COMMA, focusmonitor, -1"                   # Focus previous monitor
+        "$mod, PERIOD, focusmonitor, +1"                  # Focus next monitor
+        "$mod+SHIFT, COMMA, movewindow, -1"               # Move window to previous monitor
+        "$mod+SHIFT, PERIOD, movewindow, +1"              # Move window to next monitor
+  
+        "$mod, MINUS, exec, hyprctl --batch 'setgaps -5'" # Decrease gaps
+        "$mod, EQUAL, exec, hyprctl --batch 'setgaps +5'" # Increase gaps
+        "$mod+SHIFT, EQUAL, exec, hyprctl --batch 'setgaps 0'" # Reset gaps
+  
+        "$mod+SHIFT, Q, exit"                             # Quit Hyprland
+        "$mod+CTRL+SHIFT, Q, exec, killall -9 Hyprland"   # Force quit (unsafe)
       ]
       ++ (
           # workspaces
@@ -205,9 +247,9 @@
       );
 
       bindm = [
-        # mouse movements
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+        "$mod, mouse:272, movewindow"          # MOD + left click: move window
+        "$mod, mouse:273, resizewindow"        # MOD + right click: resize window
+        "$mod, mouse:274, togglefloating"      # MOD + middle click: toggle floating
       ];
 
       general = {
