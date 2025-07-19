@@ -81,6 +81,7 @@
     kdePackages.polkit-kde-agent-1
     #cura
     #vscode
+    veracrypt
     qalculate-qt
     octaveFull
     octavePackages.symbolic
@@ -91,6 +92,7 @@
     #epson-escpr2
     printrun
     discord
+    #anytype
     google-chrome
     #thunderbird
     #vlc
