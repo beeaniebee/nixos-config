@@ -3,7 +3,7 @@
   lib,
   config,
   pkgs,
-  #pkgs-unstable,
+  pkgs-unstable,
   ...
 }: {
   # You can import other home-manager modules here
@@ -145,8 +145,8 @@
     nix-tree
     obs-studio
     obs-studio-plugins.droidcam-obs
-#  ])
-#  ++ (with pkgs-unstable; [
+  ])
+  ++ (with pkgs-unstable; [
     zed-editor
     lutris
     wine
@@ -413,5 +413,5 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 }

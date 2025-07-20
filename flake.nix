@@ -2,8 +2,8 @@
   description = "beanie's nixos flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     stylix.url = "github:danth/stylix";
     catppuccin.url = "github:catppuccin/nix";
@@ -12,7 +12,7 @@
     nur.url = "github:nix-community/NUR";
     lanzaboote.url = "github:nix-community/lanzaboote";
     vscode-nixpkgs.url = "github:NixOS/nixpkgs/dd613136ee91f67e5dba3f3f41ac99ae89c5406b";
-      home-manager = {
+    home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -21,7 +21,7 @@
   outputs = {
     self,
     nixpkgs,
-    #nixpkgs-unstable,
+    nixpkgs-unstable,
     nur,
     catppuccin,
     home-manager,
@@ -45,10 +45,10 @@
       nixos-hp = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs outputs vscode-pkgs;
-          #pkgs-unstable = import nixpkgs-unstable {
-          #  inherit system;
-          #  config.allowUnfree = true;
-          #};
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
         };
         modules = [
           ./nixos/configuration.nix
@@ -62,13 +62,13 @@
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-	        home-manager.backupFileExtension = "bak";
+            home-manager.backupFileExtension = "bak";
             home-manager.extraSpecialArgs = {
               inherit inputs outputs;
-              #pkgs-unstable = import nixpkgs-unstable {
-              #  inherit system;
-              #  config.allowUnfree = true;
-              #};
+              pkgs-unstable = import nixpkgs-unstable {
+                inherit system;
+                config.allowUnfree = true;
+              };
             };
             home-manager.users.beanie = {
               imports = [

@@ -718,6 +718,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1752687322,
+        "narHash": "sha256-RKwfXA4OZROjBTQAl9WOZQFm7L8Bo93FQwSJpAiSRvo=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "6e987485eb2c77e5dcc5af4e3c70843711ef9251",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1752687322,
@@ -752,16 +768,16 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1752687322,
-        "narHash": "sha256-RKwfXA4OZROjBTQAl9WOZQFm7L8Bo93FQwSJpAiSRvo=",
+        "lastModified": 1752620740,
+        "narHash": "sha256-f3pO+9lg66mV7IMmmIqG4PL3223TYMlnlw+pnpelbss=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6e987485eb2c77e5dcc5af4e3c70843711ef9251",
+        "rev": "32a4e87942101f1c9f9865e04dc3ddb175f5f32e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -836,11 +852,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1752968962,
-        "narHash": "sha256-s7XPeM1JP5z212Zt/b+WbIy/4bChRPEYGZ12h8mwqf8=",
+        "lastModified": 1752985111,
+        "narHash": "sha256-L+dP3zGXSPgXKoZ0hqeZaDswyUcqZ2fTfwMTKQuscSg=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "b8d983ac8ab7ce6bf4343ed09de64fe58b8b3fcd",
+        "rev": "6c066bffadc986c4556625f4a373f0e54c3bb30c",
         "type": "github"
       },
       "original": {
@@ -976,6 +992,7 @@
         "hyprland": "hyprland",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "pyprland": "pyprland",
         "stylix": "stylix",

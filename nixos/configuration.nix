@@ -5,7 +5,7 @@
   lib,
   config,
   pkgs,
-  #pkgs-unstable,
+  pkgs-unstable,
   vscode-pkgs,
   ...
 }: {
@@ -274,5 +274,5 @@
 	  ];
     };
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "25.05";
 }
