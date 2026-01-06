@@ -1,257 +1,189 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  pkgs-unstable,
-  ...
-}: {
-  # You can import other NixOS modules here
-  imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
+{ config, lib, pkgs, inputs, ... }: {
+imports =
+  [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
+nixpkgs.config.allowUnfree = true;
 
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      allowUnfree = true;
-    };
+nix = {
+  settings = {
+    experimental-features = "nix-command flakes";
+    auto-optimise-store = true;
+  };
+  optimise.automatic = true;
+  #registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+  #nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+};
+
+# Select internationalisation properties.
+time.timeZone = "America/New_York";
+i18n.defaultLocale = "en_US.UTF-8";
+# console = {
+#   font = "Lat2-Terminus16";
+#   keyMap = "us";
+#   useXkbConfig = true; # use xkb.options in tty.
+# };
+
+networking = {
+  hostName = "nixos";
+  networkmanager.enable = true;
+  interfaces.wlp3s0.useDHCP = true;
+};
+
+boot = {
+  initrd.systemd.enable = true;
+  blacklistedKernelModules = [ "nouveau" ];
+
+  # These flags are used to enable backlight control when the dGPU is working in hybrid mode
+  kernelParams = [
+    "nvidia.NVreg_EnableBacklightHandler=0"
+    "nvidia.NVReg_RegistryDwords=EnableBrightnessControl=0"
+    "mem_sleep_default=sleep"
+    "pcie_aspm.policy=powersupersave"
+    "amd-pstate=active"
+  ];
+
+  loader = {
+      # (Lanzaboote) DON'T Use the systemd-boot EFI boot loader.
+      systemd-boot.enable = lib.mkForce false;
+      #efi.canTouchEfiVariables = true;
+      #efi.efiSysMountPoint = "/boot/efi";
   };
 
-  nix = {
-    settings = {
-      experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-    };
-    optimise.automatic = true;
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-  };
-
-  networking.hostName = "nixphyrus";
-  networking.networkmanager.enable = true;
-  time.timeZone = "America/New_York";
-
-  catppuccin = {
+  lanzaboote = {
     enable = true;
-    flavor = "mocha";
-    sddm.enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
+};
+
+users.users = {
+  beanie = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" ];
+    shell = pkgs.zsh;
+  };
+};
+
+services = {
+  printing.enable = true;
+  fstrim.enable = true;
+  flatpak.enable = true;
+  udisks2.enable = true;
+  fwupd.enable = true;
+  #libinput.enable = true;
+
+  displayManager.cosmic-greeter.enable = true;
+  desktopManager.cosmic.enable = true;
+
+  # fixes mic mute button
+  udev.extraHwdb = ''
+    evdev:name:*:dmi:bvn*:bvr*:bd*:svnASUS*:pn*:*
+      KEYBOARD_KEY_ff31007c=f20
+  '';
+
+  xserver = {
+    enable = true;
+    videoDrivers = [ "nvidia" "amdgpu" ];
+
+    # Configure keymap in X11
+    xkb.layout = "us";
+    # xkb.options = "eurosign:e,caps:escape";
   };
 
-  boot = {
-    loader = {
-        systemd-boot.enable = lib.mkForce false;
-        efi.canTouchEfiVariables = true;
-        efi.efiSysMountPoint = "/boot/efi";
-    };
-
-    bootspec.enable = true;
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
-    };
+  avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
   };
 
-  users.users = {
-    beanie = {
-      initialPassword = "nixos";
-      isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "input" "libvirtd" ];
-      shell = pkgs.zsh;
-    };
+  #usbmuxd = {
+  #  enable = true;
+  #  package = pkgs.usbmuxd2;
+  #};
+
+  pipewire = {
+    enable = true;
+    pulse.enable = true;
   };
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-  ];
+  # Zephyrus edits
+  supergfxd.enable = true;
+  asusd = {
+    enable = true;
+    enableUserService = true;
+  };
+};
 
-  services = {
-    printing.enable = true;
-    blueman.enable = true;
-    gvfs.enable = true;
-    tumbler.enable = true;
-    power-profiles-daemon.enable = true;
-
-    displayManager.sddm = {
-      enable = true;
-      package = pkgs.kdePackages.sddm;
-      #catppuccin.enable = true;
-      wayland.enable = true;
+hardware = {
+  amdgpu.initrd.enable = true;
+  graphics =  {
+    enable = true;
+    #enable32bit = true;
+  };
+  nvidia = {
+    open = true;
+    modesetting.enable = true;
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+      amdgpuBusId = "PCI:101:0:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
-
-    xserver = {
+    powerManagement = {
       enable = true;
-      desktopManager.cinnamon.enable = true;
-      #videoDrivers = [ "amdgpu" ]; #"nvidia" ];
-    };
-    cinnamon.apps.enable = true;
-
-    usbmuxd = {
-      enable = true;
-      package = pkgs.usbmuxd2;
-    };
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      #jack.enable = true;
-      wireplumber.extraConfig = {
-        "monitor.bluez.properties" = {
-        "bluez5.enable-sbc-xq" = true;
-        "bluez5.enable-msbc" = true;
-        "bluez5.enable-hw-volume" = true;
-        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
-        };
-      };
+      finegrained = true;
     };
   };
+  #bluetooth = {
+  #  enable = true;
+  #  package = pkgs.bluez;
+  #  #powerOnBoot = true;
+  #  settings = {
+  #    General = {
+  #      Enable = "Source,Sink,Media,Socket";
+  #      ControllerMode = "dual";
+  #      FastConnectable = "true";
+  #      Experimental = "true";
+  #     };
+  #    Policy = {
+  #      AutoEnable = "true";
+  #    };
+  #  };
+  #};
+};
 
-  programs = {
-    hyprland.enable = true;
-    zsh.enable = true;
-    xfconf.enable = true;
-    gpaste.enable = true;
-    kdeconnect.enable = true;
-    virt-manager.enable = true;
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-archive-plugin
-      ];
-    };
-  };
+security = {
+  polkit.enable = true;
+  polkit.extraConfig = ''
+    // Allow wheel to perform udisks2 disk operations (write/format) with a 1-time auth
+    polkit.addRule(function(action, subject) {
+      if (subject.isInGroup("wheel") &&
+          action.id.indexOf("org.freedesktop.udisks2.") === 0) {
+        return polkit.Result.AUTH_ADMIN_KEEP; // prompt once, cache
+      }
+    });
+  '';
+};
 
-  security.rtkit.enable = true;
-  virtualisation.libvirtd.enable = true;
+# List packages installed in system profile.
+programs = {
+  zsh.enable = true;
+  localsend.enable = true;
+};
+environment.systemPackages = with pkgs; [
+  vim
+  wget
+  git
+  curl
+  sbctl
+  pciutils
+  usbutils
+  gparted
+  rpi-imager
+  #libimobiledevice
+  #ifuse
+];
 
-  hardware = {
-    pulseaudio.enable = false;
-    #openrazer.enable = true;
-
-    #nvidia = {
-    #  modesetting.enable = true;
-    #  open = true;
-    #  nvidiaSettings = true;
-    #  prime = {
-    #    offload = {
-    #      enable = true;
-    #      enableOffloadCmd = true;
-    #    };
-    #    amdgpuBusId = "PCI:4:0:0";
-    #    nvidiaBusId = "PCI:1:0:0";
-    #  };
-    #  powerManagement = {
-    #    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    #    # Enable this if you have graphical corruption issues or application crashes after waking
-    #    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    #    # of just the bare essentials.
-    #    enable = true;
-    #    # Fine-grained power management. Turns off GPU when not in use.
-    #    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    #    finegrained = true;
-    #  };
-    #};
-
-    bluetooth = {
-      enable = true;
-      package = pkgs.bluez;
-      powerOnBoot = true;
-      settings = {
-        General = {
-          Enable = "Source,Sink,Media,Socket";
-          ControllerMode = "dual";
-          FastConnectable = "true";
-          Experimental = "true";
-        };
-        Policy = {
-          AutoEnable = "true";
-        };
-      };
-    };
-
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-      #extraPackages = with pkgs; [
-        #rocm-opencl-icd
-        #rocm-opencl-runtime
-        #amdvlk
-      #];
-    };
-  };
-
-  environment.systemPackages = with pkgs; [
-    fwupd
-    vim
-    wget
-    git
-    curl
-    pavucontrol
-    plasma-pa
-    libimobiledevice
-    ifuse
-    power-profiles-daemon
-    #openrazer-daemon
-    pciutils
-    aha
-    clinfo
-    glxinfo
-    vulkan-tools
-    wayland-utils
-    tpm2-tss
-    blueman
-    nwg-look
-    nwg-hello
-    nwg-panel
-    virtiofsd
-    guestfs-tools
-    inputs.zen-browser.packages."${system}".default
-  ]
-  ++ (with pkgs-unstable; [
-    sbctl
-    ]);
-
-  security.pam.services.hyprlock = {};
-
-  networking.firewall = {
-      enable = true;
-	  # Open ports in the firewall.
-		allowedTCPPortRanges = [
-	    { from = 1714; to = 1764; } # KDE Connect
-	    { from = 42000; to = 42001; } # Warpinator
-	  ];
-	  allowedUDPPortRanges = [
-	    { from = 1714; to = 1764; } # KDE Connect
-	    { from = 5353; to = 5353; } # Warpinator
-	  ];
-    };
-
-  system.stateVersion = "24.11";
+system.stateVersion = "26.05";
 }

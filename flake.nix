@@ -1,77 +1,47 @@
 {
-  description = "beanie's nixos flake";
+  description = "beanie's second attempt at NixOS";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    stylix.url = "github:danth/stylix";
-    catppuccin.url = "github:catppuccin/nix";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    pyprland.url = "github:hyprland-community/pyprland";
-    nur.url = "github:nix-community/NUR";
-    lanzaboote.url = "github:nix-community/lanzaboote";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    nur,
-    catppuccin,
-    home-manager,
-    zen-browser,
-    ...
-  } @ inputs:
-  let
-    inherit (self) outputs;
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      nixphyrus = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
+  outputs = { self, nixpkgs, zen-browser, lanzaboote, home-manager, ... } @ inputs: {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./nixos/configuration.nix
+        lanzaboote.nixosModules.lanzaboote
+        {
+        nix.settings = {
+          substituters = [ "https://cosmic.cachix.org/" ];
+          trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
         };
-        modules = [
-          ./nixos/configuration.nix
-          nur.modules.nixos.default
-          # This adds a nur configuration option.
-          # Use `config.nur` for packages like this:
-          # ({ config, ... }: {
-          #   environment.systemPackages = [ config.nur.repos.mic92.hello-nur ];
-          # })
-          catppuccin.nixosModules.catppuccin
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+        }
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
 	        home-manager.backupFileExtension = "bak";
-            home-manager.extraSpecialArgs = {
-              inherit inputs outputs;
-              pkgs-unstable = import nixpkgs-unstable {
-                inherit system;
-                config.allowUnfree = true;
-              };
-            };
-            home-manager.users.beanie = {
-              imports = [
-                ./home-manager/home.nix
-                catppuccin.homeManagerModules.catppuccin
-              ];
-            };
-          }
-        ];
-      };
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.beanie = {
+            imports = [
+              ./home-manager/home.nix
+            ];
+          };
+        }
+      ];
     };
   };
 }
