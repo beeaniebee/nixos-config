@@ -75,7 +75,7 @@
     #meson
     #wayland-protocols
     #wayland-utils
-    wl-clipboard
+    #wl-clipboard
     #wlroots
     #pavucontrol
     #dunst
