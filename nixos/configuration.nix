@@ -62,9 +62,6 @@
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" ];
       shell = pkgs.zsh;
-      #**openssh.authorizedKeys.keys = [
-      #**  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8Edx73smHc+THz5F3EaC87Fse7Q1LKLOs1M/gfm+9N beeaniebee"
-      #**];
     };
   };
 
@@ -112,7 +109,7 @@
 
     # Zephyrus edits
     supergfxd.enable = true;
-    asusd.enable = true; #**
+    asusd.enable = true;
   };
 
   hardware = {
@@ -172,9 +169,8 @@
   programs = {
     zsh.enable = true;
     localsend.enable = true;
-    #ssh.startAgent = true; #**
-    steam.enable = true; #**
-    nix-ld.enable = true; #**
+    steam.enable = true;
+    nix-ld.enable = true;
     git.enable = true;
   };
 
@@ -189,8 +185,8 @@
     rpi-imager
     #libimobiledevice
     #ifuse
-    vlc #**
-    libvlc #**
+    vlc
+    libvlc
     #**android-tools
   ];
 
