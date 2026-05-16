@@ -175,12 +175,12 @@
     #ssh.startAgent = true; #**
     steam.enable = true; #**
     nix-ld.enable = true; #**
+    git.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     vim
     wget
-    git
     curl
     sbctl
     pciutils
