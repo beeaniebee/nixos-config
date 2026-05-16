@@ -45,14 +45,13 @@
     #octavePackages.symbolic
     #logisim-evolution
     #minecraft - marked as broken, refusing to evaluate
-    steam
+    #**steam
     #blender
     #epson-escpr2
     #printrun
     discord
     #google-chrome
     #thunderbird
-    #vlc
     #onlyoffice-bin
     pdfarranger
     solaar
@@ -84,7 +83,7 @@
     #ffmpeg
     #nerdfonts
     fantasque-sans-mono
-    nixfmt-rfc-style
+    nixfmt #** -rfc-style
     #blueman
     pass-wayland
     gnupg
@@ -108,6 +107,7 @@
     #lutris
     #wine
     cosmic-store
+    code-cursor #**
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
   ];
 
@@ -290,14 +290,19 @@
       autosuggestion.enable = true;
 
       initContent = ''
-        function lk {
-          cd "$(walk --icons "$@")"
+        function lk() {
+          cd -- "$(walk --icons "$@")"
         }
       '';
 
-      #shellAliases = {
+      shellAliases = {
       #  stdp = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run 'steam-run ~/Documents/Mods/Stardrop/Internal $@'";
-      #};
+      updnix = "nix flake update && sudo nixos-rebuild switch --flake ~/.nixos-config/#nixos";
+      clean = "nix-collect-garbage -d; sudo nix-collect-garbage -d";
+      lsgen = "sudo nix-env --list-generations";
+      delgen = "sudo /run/current-system/bin/switch-to-configuration boot";
+      tpmnrl = "sudo systemd-cryptenroll --tpm2-device=auto /dev/nvme0n1p6 --tpm2-pcrs=0+2+4+7+8+9 --wipe-slot=tpm2 --tpm2-with-pin=yes; sudo systemd-cryptenroll --tpm2-device=auto /dev/nvme0n1p6 --tpm2-pcrs=0+1+2+3+4+5+6+7+8+9";
+      };
 
       #sessionVariables = {
       #  EDITOR = "$(which lvim)";
