@@ -25,13 +25,7 @@
       modules = [
         ./nixos/configuration.nix
         lanzaboote.nixosModules.lanzaboote
-        {
-          nixpkgs.overlays = [ opencode.overlays.default ];
-          nix.settings = {
-            substituters = [ "https://cosmic.cachix.org/" ];
-            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-          };
-        }
+        { nixpkgs.overlays = [ opencode.overlays.default ]; }
 
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
