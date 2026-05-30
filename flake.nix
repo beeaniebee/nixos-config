@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    opencode.url = "github:GutMutCode/opencode-nix";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, zen-browser, lanzaboote, home-manager, ... } @ inputs: {
+  outputs = { self, nixpkgs, zen-browser, lanzaboote, home-manager, opencode, ... } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -25,6 +26,7 @@
         ./nixos/configuration.nix
         lanzaboote.nixosModules.lanzaboote
         {
+          nixpkgs.overlays = [ opencode.overlays.default ];
           nix.settings = {
             substituters = [ "https://cosmic.cachix.org/" ];
             trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];

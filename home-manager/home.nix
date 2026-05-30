@@ -1,4 +1,11 @@
-{ inputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -83,7 +90,7 @@
     #ffmpeg
     #nerdfonts
     fantasque-sans-mono
-    nixfmt #** -rfc-style
+    nixfmt # ** -rfc-style
     #blueman
     pass-wayland
     gnupg
@@ -108,6 +115,9 @@
     #wine
     cosmic-store
     code-cursor
+    opencode
+    nil
+    nixd
     inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
   ];
 
@@ -310,12 +320,12 @@
       '';
 
       shellAliases = {
-      #  stdp = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run 'steam-run ~/Documents/Mods/Stardrop/Internal $@'";
-      updnix = "nix flake update --flake ~/.nixos-config && sudo nixos-rebuild switch --flake ~/.nixos-config/#nixos";
-      clean = "sudo nix-collect-garbage -d;nix-collect-garbage -d";
-      lsgen = "sudo nix-env --list-generations";
-      delgen = "sudo /run/current-system/bin/switch-to-configuration boot";
-      tpmnrl = "sudo systemd-cryptenroll --tpm2-device=auto /dev/nvme0n1p6 --tpm2-pcrs=0+1+2+3+4+7 --wipe-slot=tpm2 --tpm2-with-pin=yes";# && sudo systemd-cryptenroll --tpm2-device=auto /dev/nvme0n1p6 --tpm2-pcrs=0+1+2+3+4+5+6+7+8";
+        #  stdp = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run 'steam-run ~/Documents/Mods/Stardrop/Internal $@'";
+        updnix = "nix flake update --flake ~/.nixos-config && sudo nixos-rebuild switch --flake ~/.nixos-config/#nixos";
+        clean = "sudo nix-collect-garbage -d;nix-collect-garbage -d";
+        lsgen = "sudo nix-env --list-generations";
+        delgen = "sudo /run/current-system/bin/switch-to-configuration boot";
+        tpmnrl = "sudo systemd-cryptenroll --tpm2-device=auto /dev/nvme0n1p6 --tpm2-pcrs=0+1+2+3+4+7 --wipe-slot=tpm2 --tpm2-with-pin=yes"; # && sudo systemd-cryptenroll --tpm2-device=auto /dev/nvme0n1p6 --tpm2-pcrs=0+1+2+3+4+5+6+7+8";
       };
       syntaxHighlighting.enable = true;
       autocd = true;
@@ -328,7 +338,7 @@
 
       oh-my-zsh = {
         enable = true;
-        plugins = [];
+        plugins = [ ];
         theme = "gentoo";
       };
     };
