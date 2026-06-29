@@ -1,6 +1,9 @@
-{ ... }: {
+{ pkgs, ... }: {
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+
     blacklistedKernelModules = [ "nouveau" ];
+
 
     # These flags are used to enable backlight control when the dGPU is working in hybrid mode
     kernelParams = [

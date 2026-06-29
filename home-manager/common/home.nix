@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ ... }: {
   home = {
     username = "beanie";
     homeDirectory = "/home/beanie";
