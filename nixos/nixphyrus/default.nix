@@ -7,5 +7,6 @@
     ./powersave.nix
     ./networking.nix
     ./packages.nix
+    ./hibernate.nix
   ];
 }

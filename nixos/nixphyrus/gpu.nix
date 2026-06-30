@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   services = {
     xserver.videoDrivers = [ "nvidia" "amdgpu" ];
-    power-profiles-daemon.enable = true;
+    #power-profiles-daemon.enable = true;
   };
 
   hardware = {
@@ -23,18 +23,18 @@
     };
   };
 
-  systemd.services.power-profiles-daemon-config = {
-    description = "Configure AMD battery saving actions";
-    after = [ "power-profiles-daemon.service" ];
-    bindsTo = [ "power-profiles-daemon.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = ''
-      ${pkgs.power-profiles-daemon}/bin/powerprofilesctl configure-action amdgpu_panel_power --enable
-      ${pkgs.power-profiles-daemon}/bin/powerprofilesctl configure-action amdgpu_dpm --enable
-    '';
-  };
+  # systemd.services.power-profiles-daemon-config = {
+  #   description = "Configure AMD battery saving actions";
+  #   after = [ "power-profiles-daemon.service" ];
+  #   bindsTo = [ "power-profiles-daemon.service" ];
+  #   wantedBy = [ "power-profiles-daemon.service" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = true;
+  #   };
+  #   script = ''
+  #     ${pkgs.power-profiles-daemon}/bin/powerprofilesctl configure-action amdgpu_panel_power --enable
+  #     ${pkgs.power-profiles-daemon}/bin/powerprofilesctl configure-action amdgpu_dpm --enable
+  #   '';
+  # };
 }

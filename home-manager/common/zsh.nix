@@ -14,8 +14,9 @@
     shellAliases = {
       #  stdp = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p steam-run --run 'steam-run ~/Documents/Mods/Stardrop/Internal $@'";
       updnix = "nix flake update --flake ~/.nixos-config && sudo nixos-rebuild switch --flake ~/.nixos-config/#nixos";
+      bootupd = "nix flake update --flake ~/.nixos-config && sudo nixos-rebuild boot --flake ~/.nixos-config/#nixos";
       clean = "sudo nix-collect-garbage -d;nix-collect-garbage -d";
-      lsgen = "sudo nix-env --list-generations";
+      lsgen = "sudo nix-env --profile /nix/var/nix/profiles/system --list-generations";
       delgen = "sudo /run/current-system/bin/switch-to-configuration boot";
     };
     syntaxHighlighting.enable = true;
