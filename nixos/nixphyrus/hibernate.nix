@@ -13,5 +13,22 @@
     HandlePowerKeyLongPress = "poweroff";
   };
 
-  systemd.sleep.settings.Sleep.HibernateDelaySec = "60m";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "15s";
+
+  systemd.services = {
+    nvidia-hibernate = {
+      before = [ "systemd-suspend-then-hibernate.service" ];
+      wantedBy = [ "suspend-then-hibernate.target" ];
+    };
+
+    nvidia-suspend = {
+      before = [ "systemd-hybrid-sleep.service" ];
+      wantedBy = [ "hybrid-sleep.target" ];
+    };
+
+    nvidia-resume = {
+      after = [ "systemd-suspend-then-hibernate.service" "systemd-hybrid-sleep.service" ];
+      wantedBy = [ "post-resume.target" ];
+    };
+  };
 }

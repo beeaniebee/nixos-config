@@ -16,6 +16,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cardwire = {
+        url = "github:opengamingcollective/cardwire";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, zen-browser, lanzaboote, home-manager, opencode, ... } @ inputs: {

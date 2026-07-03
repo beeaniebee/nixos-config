@@ -1,7 +1,18 @@
-{ pkgs, ... }: {
+{ inputs, ... }: {
+  imports = [ inputs.cardwire.nixosModules.default ];
+
   services = {
     xserver.videoDrivers = [ "nvidia" "amdgpu" ];
-    #power-profiles-daemon.enable = true;
+    power-profiles-daemon.enable = true;
+    cardwire = {
+      enable = true;
+      settings = {
+        auto_apply_gpu_state = true;
+        experimental_nvidia_block = true;
+        battery_auto_switch = true;
+        battery_auto_switch_mode = "integrated";
+      };
+    };
   };
 
   hardware = {
@@ -22,19 +33,4 @@
       };
     };
   };
-
-  # systemd.services.power-profiles-daemon-config = {
-  #   description = "Configure AMD battery saving actions";
-  #   after = [ "power-profiles-daemon.service" ];
-  #   bindsTo = [ "power-profiles-daemon.service" ];
-  #   wantedBy = [ "power-profiles-daemon.service" ];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     RemainAfterExit = true;
-  #   };
-  #   script = ''
-  #     ${pkgs.power-profiles-daemon}/bin/powerprofilesctl configure-action amdgpu_panel_power --enable
-  #     ${pkgs.power-profiles-daemon}/bin/powerprofilesctl configure-action amdgpu_dpm --enable
-  #   '';
-  # };
 }

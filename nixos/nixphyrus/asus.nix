@@ -1,7 +1,6 @@
 { ... }: {
   services = {
     # Zephyrus edits
-    supergfxd.enable = true;
     asusd.enable = true;
 
     # fixes mic mute button

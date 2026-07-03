@@ -18,6 +18,7 @@
       clean = "sudo nix-collect-garbage -d;nix-collect-garbage -d";
       lsgen = "sudo nix-env --profile /nix/var/nix/profiles/system --list-generations";
       delgen = "sudo /run/current-system/bin/switch-to-configuration boot";
+      pwr = "echo - | awk '{printf \"%.1f\", $(( $(cat /sys/class/power_supply/BAT1/current_now) * $(cat /sys/class/power_supply/BAT1/voltage_now) )) / 1f000000000000 }' ; echo \" W \"";
     };
     syntaxHighlighting.enable = true;
     autocd = true;

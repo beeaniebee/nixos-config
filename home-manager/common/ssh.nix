@@ -1,8 +1,8 @@
 { ... }: {
   programs.ssh = {
     enable = true;
-    matchBlocks."*" = {
-      addKeysToAgent = "yes";
+    settings."*" = {
+      AddKeysToAgent = "yes";
     };
   };
 }
