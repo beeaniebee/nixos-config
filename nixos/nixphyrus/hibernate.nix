@@ -13,7 +13,7 @@
     HandlePowerKeyLongPress = "poweroff";
   };
 
-  systemd.sleep.settings.Sleep.HibernateDelaySec = "15s";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "30m";
 
   systemd.services = {
     nvidia-hibernate = {
