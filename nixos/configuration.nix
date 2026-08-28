@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ./common/default.nix
-    ./nixphyrus/default.nix
+    ./common.nix
+    ./nixphyrus.nix
   ];
 }
