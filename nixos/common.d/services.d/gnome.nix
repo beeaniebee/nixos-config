@@ -11,4 +11,21 @@
     gnome-tour
     gnome-user-docs
   ];
+
+  environment.systemPackages = with pkgs; [
+    gnome-tweaks
+    gnomeExtensions.paperwm
+  ];
+
+  programs.dconf = {
+    enable = true;
+    profiles."user".databases = [
+      {
+        settings."org/gnome/shell" = {
+          disable-user-extensions = false;
+          enabled-extensions = [ "paperwm@paperwm.github.com" ];
+        };
+      }
+    ];
+  };
 }
