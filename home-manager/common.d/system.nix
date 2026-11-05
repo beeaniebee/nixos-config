@@ -4,5 +4,6 @@
     ./system.d/state.nix
     ./system.d/home-manager.nix
     ./system.d/xdg.nix
+    ./system.d/catppuccin.nix
   ];
 }

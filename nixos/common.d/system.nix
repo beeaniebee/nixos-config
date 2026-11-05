@@ -6,5 +6,6 @@
     ./system.d/locale.nix
     ./system.d/users.nix
     ./system.d/networking.nix
+    ./system.d/catppuccin.nix
   ];
 }

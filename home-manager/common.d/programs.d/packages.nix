@@ -68,7 +68,7 @@
     zed-editor
     libreoffice
     onlyoffice-desktopeditors
-    #lutris
+    lutris
     #wine
     cosmic-store
     opencode

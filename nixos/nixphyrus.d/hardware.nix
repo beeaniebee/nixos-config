@@ -5,5 +5,6 @@
     ./hardware.d/gpu.nix
     ./hardware.d/powersave.nix
     ./hardware.d/asus.nix
+    ./hardware.d/bitlocker.nix
   ];
 }

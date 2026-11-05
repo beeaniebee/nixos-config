@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     opencode.url = "github:GutMutCode/opencode-nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,12 +26,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, zen-browser, lanzaboote, home-manager, opencode, ... } @ inputs: {
+  outputs = { self, nixpkgs, zen-browser, lanzaboote, home-manager, opencode, catppuccin, ... } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./nixos/configuration.nix
+        catppuccin.nixosModules.catppuccin
         lanzaboote.nixosModules.lanzaboote
         { nixpkgs.overlays = [ opencode.overlays.default ]; }
 
@@ -37,7 +42,10 @@
           home-manager.backupFileExtension = "bak";
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users.beanie = {
-            imports = [ ./home-manager/home.nix ];
+            imports = [
+              ./home-manager/home.nix
+              catppuccin.homeModules.catppuccin
+            ];
           };
         }
       ];
