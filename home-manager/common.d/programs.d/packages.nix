@@ -71,7 +71,6 @@
     #lutris
     #wine
     cosmic-store
-    code-cursor
     opencode
     nil
     nixd
