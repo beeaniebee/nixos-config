@@ -4,6 +4,15 @@ let
   # Unlock/mount a drive only when its mount point is first accessed.
   mountOnAccess = false;
 
+  # Filesystem driver for the Windows C: drive (/winOS):
+  #
+  #   false -> ntfs-3g: slower (FUSE), but checks hiberfil.sys and the
+  #            NTFS log at mount time and automatically falls back to a
+  #            read-only mount if Windows is hibernated or unclean.
+  #   true  -> ntfs3: in-kernel and faster, but refuses to mount a
+  #            hibernated/unclean volume instead of mounting read-only.
+  useNtfs3ForWinOS = false;
+
   # Set to true to unlock without prompting, using root-only key files.
   # BitLocker passwords differ per volume, so each drive needs its own key.
   # Create them once (keep them out of the Nix store):
@@ -27,24 +36,21 @@ let
       name = "bitlkwindows";
       uuid = "2cd3867c-afe3-400a-bb3c-3fd343d125b0";
       mountPoint = "/winOS";
-      # ntfs-3g checks hiberfil.sys and the NTFS log at mount time. If
-      # Windows is hibernated (or was left unclean, e.g. fast startup),
-      # it automatically falls back to a read-only mount; otherwise it
-      # mounts read-write. The kernel ntfs3 driver instead refuses to
-      # mount such volumes, so ntfs-3g is used here for the dynamic
-      # read-only behaviour.
+      fsType = if useNtfs3ForWinOS then "ntfs3" else "ntfs-3g";
       #
-      # Manual check once the volume is unlocked:
+      # Manual hibernation check once the volume is unlocked (ntfs-3g):
       #   sudo ntfs-3g.probe --readwrite /dev/mapper/bitlkwindows; echo $?
       # 0 = clean, 14 = hibernated, 15 = not cleanly unmounted.
       #
       # Note: with Windows Fast Startup enabled, even a normal "shutdown"
-      # leaves C: unclean, so it will be read-only. Disable Fast Startup
-      # (in Windows: powercfg /h off) if you want read-write after shutdown.
-      fsType = "ntfs-3g";
-      # Do not replay/reset the NTFS log on an unclean volume; just fall
-      # back to read-only instead.
-      extraMountOptions = [ "norecover" ];
+      # leaves C: unclean, so ntfs-3g will mount it read-only. Disable
+      # Fast Startup (in Windows: powercfg /h off) if you want read-write
+      # after shutdown.
+      #
+      # ntfs3 has no "recover" step, so "norecover" only applies to
+      # ntfs-3g. With ntfs-3g, never replay the NTFS log on an unclean
+      # volume; just fall back to read-only instead.
+      extraMountOptions = lib.optional (!useNtfs3ForWinOS) "norecover";
       keyFile = "/var/lib/bitlocker/windows.key";
     }
   ];
@@ -99,7 +105,8 @@ in
     map (d: lib.nameValuePair d.mountPoint (mkFileSystem d)) drives
   );
 
-  # ntfs3 is used for /games. ntfs-3g (for /winOS) is added to
-  # system.fsPackages automatically because of its fsType.
+  # /games always uses ntfs3. /winOS uses ntfs-3g unless
+  # useNtfs3ForWinOS is set; ntfs-3g is added to system.fsPackages
+  # automatically because of its fsType.
   boot.kernelModules = [ "ntfs3" "fuse" ];
 }

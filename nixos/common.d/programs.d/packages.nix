@@ -12,6 +12,7 @@
     #ifuse
     vlc
     libvlc
+    tpm2-tools
     #**android-tools
   ];
 }

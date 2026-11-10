@@ -25,6 +25,9 @@
           disable-user-extensions = false;
           enabled-extensions = [ "paperwm@paperwm.github.com" ];
         };
+        settings."org/gnome/desktop/interface" = {
+          icon-theme = "Cosmic";
+        };
       }
     ];
   };
